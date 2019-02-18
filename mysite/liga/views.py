@@ -16,12 +16,16 @@ def index(request):
 
 
 def rosters(request):
-    owner_list = Owner.objects.all()
-    player_list = Player.objects.filter(kept=True)
-    rosters = Roster.objects.all()
+    #owner_list = Owner.objects.all()
+    #player_list = Player.objects.filter(kept=True)
+    roster_items = Roster.objects.all()
+    kevin = Roster.objects.filter(owner__name='Kevin')
     template = loader.get_template('liga/rosters.html')
     context = {
-        'owner_list': owner_list,
+     #   'owner_list': owner_list,
+     #   'player_list': player_list,
+        'roster_items': roster_items,
+        'kevin': kevin,
     }
     return HttpResponse(template.render(context, request))
 

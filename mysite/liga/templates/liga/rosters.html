@@ -8,16 +8,17 @@
 {% include "liga/navbar.html" %}
 
 
-{% if owner_list %}
+{% if kevin %}
     <ul>
-    {% for owner in owner_list %}
-        <li>{{owner.name}}</li>
+
+    {% for item in kevin %}
+        <li>{{item.owner.name}} - {{item.athlete.name}}</li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No Owners are available.</p>
+    <p>Kevin has no players</p>
 {% endif %}
-
+<br>
 
 {% include "liga/jquery_include.html" %}
 </body>
