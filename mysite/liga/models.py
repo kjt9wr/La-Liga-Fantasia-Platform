@@ -17,3 +17,10 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
+
+class Roster(models.Model):
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    athlete = models.ForeignKey(Player, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.owner.name + ": " + self.athlete.name

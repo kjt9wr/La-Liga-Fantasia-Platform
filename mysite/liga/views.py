@@ -2,6 +2,7 @@ from django.http import HttpResponse
 
 from .models import Owner
 from .models import Player
+from .models import Roster
 from django.template import loader
 
 
@@ -16,6 +17,8 @@ def index(request):
 
 def rosters(request):
     owner_list = Owner.objects.all()
+    player_list = Player.objects.filter(kept=True)
+    rosters = Roster.objects.all()
     template = loader.get_template('liga/rosters.html')
     context = {
         'owner_list': owner_list,
