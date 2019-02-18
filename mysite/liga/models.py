@@ -24,3 +24,14 @@ class Roster(models.Model):
 
     def __str__(self):
         return self.owner.name + ": " + self.athlete.name
+
+
+class Trade(models.Model):
+    tradeID = models.IntegerField()
+    recipient = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    giver = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name="givers")
+    athlete = models.ForeignKey(Player, on_delete=models.CASCADE)
+    cap = models.IntegerField()
+
+    def __str__(self):
+        return self.giver.name + " gives " + self.athlete.name + " and $" + str(self.cap) + " to " + self.recipient.name
