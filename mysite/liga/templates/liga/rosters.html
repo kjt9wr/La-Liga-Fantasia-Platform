@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rosters</title>
+</head>
+<body>
+{% include "liga/navbar.html" %}
+
+
+{% if owner_list %}
+    <ul>
+    {% for owner in owner_list %}
+        <li>{{owner.name}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Owners are available.</p>
+{% endif %}
+</body>
+</html>
+
