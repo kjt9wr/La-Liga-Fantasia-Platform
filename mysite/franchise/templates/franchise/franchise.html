@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Franchise</title>
+</head>
+<body>
+{% include "liga/navbar.html" %}
+
+
+    {% if player_list %}
+        <ul>
+        {% for player in player_list %}
+            <li>{{player.name}}: {{player.price}} </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Players are available.</p>
+    {% endif %}
+
+
+{% include "liga/jquery_include.html" %}
+</body>
+</html>

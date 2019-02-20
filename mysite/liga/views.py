@@ -41,13 +41,14 @@ def captracker(request):
     return HttpResponse(template.render(context, request))
 
 
-def franchise(request):
-    player_list = Player.objects.filter(kept=True)
-    template = loader.get_template('liga/franchise.html')
-    context = {
-        'player_list': player_list,
-    }
-    return HttpResponse(template.render(context, request))
+
+#def franchise(request):
+#    player_list = Player.objects.filter(kept=True)
+#    template = loader.get_template('liga/franchise.html')
+#    context = {
+#        'player_list': player_list,
+#    }
+#    return HttpResponse(template.render(context, request))
 
 
 def remaining(name, max):
