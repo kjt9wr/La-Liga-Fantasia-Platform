@@ -32,25 +32,6 @@ def rosters(request):
     return HttpResponse(template.render(context, request))
 
 
-def captracker(request):
-    owner_list = Owner.objects.all()
-    template = loader.get_template('liga/captracker.html')
-    context = {
-        'owner_list': owner_list,
-    }
-    return HttpResponse(template.render(context, request))
-
-
-
-#def franchise(request):
-#    player_list = Player.objects.filter(kept=True)
-#    template = loader.get_template('liga/franchise.html')
-#    context = {
-#        'player_list': player_list,
-#    }
-#    return HttpResponse(template.render(context, request))
-
-
 def remaining(name, max):
     temp = Roster.objects.filter(owner__name=name).filter(athlete__kept=True)
     sum = 0
