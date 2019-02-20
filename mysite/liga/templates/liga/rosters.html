@@ -7,16 +7,41 @@
 <body>
 {% include "liga/navbar.html" %}
 
+<div class="container">
+    <table class="table .table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Position</th>
+                <th scope="col">Player Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Keep?</th>
+            </tr>
+        </thead>
+        <tbody>
+      {% for item in kevin %}
+            <tr>
+              <td>{{item.athlete.position}}</td>
+              <td>{{item.athlete.name}}</td>
+              <td>{{item.athlete.price}}</td>
+              <td> <input type="checkbox" aria-label="Checkbox for following text input"></td>
+            </tr>
+      {% endfor %}
+            <tr>
+                <td><b>Max Cap: </b> </td>
+                <td></td>
+                <td>{{kevin_mcap}} </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>Remaining Cap: </b> </td>
+                <td></td>
+                <td>{{kevin_rcap }} </td>
+                <td></td>
+            </tr>
+      </tbody>
+    </table>
+</div>
 
-{% if owner_list %}
-    <ul>
-    {% for owner in owner_list %}
-        <li>{{owner.name}}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No Owners are available.</p>
-{% endif %}
 
 
 {% include "liga/jquery_include.html" %}
