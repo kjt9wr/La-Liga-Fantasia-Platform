@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'liga.apps.LigaConfig',
+    'franchise.apps.FranchiseConfig',
+    'captracker.apps.CaptrackerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

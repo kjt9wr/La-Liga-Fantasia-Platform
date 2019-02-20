@@ -12,7 +12,7 @@ from django.template import loader
 
 def franchise(request):
     player_list = Player.objects.filter(kept=True)
-    template = loader.get_template('liga/franchise.html')
+    template = loader.get_template('franchise/franchise.html')
     context = {
         'player_list': player_list,
     }

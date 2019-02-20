@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^liga/', include('liga.urls')),
     url(r'^franchise/', include('franchise.urls')),
+    url(r'^captracker/', include('captracker.urls')),
     url(r'^admin/', admin.site.urls),
 ]
