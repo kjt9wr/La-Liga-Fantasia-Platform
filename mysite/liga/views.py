@@ -15,19 +15,21 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def rosters(request):
+def rosters(request, owner_id):
     roster_items = Roster.objects.all()
 
-    kevin = Roster.objects.filter(owner__name='Kevin')
-    kevin_mcap = Owner.objects.values('cap')[0]['cap']
-    kevin_rcap = remaining('Kevin', kevin_mcap)
+    kevin = Roster.objects.filter(owner__pk=owner_id)
+    owner_name = Owner.objects.filter(pk=owner_id).values('name')[0]['name']
+    max_cap = Owner.objects.filter(pk=owner_id).values('cap')[0]['cap']
+    rem_cap = remaining(owner_name, max_cap)
 
     template = loader.get_template('liga/rosters.html')
     context = {
         'roster_items': roster_items,
         'kevin': kevin,
-        'kevin_mcap': kevin_mcap,
-        'kevin_rcap': kevin_rcap,
+        'max_cap': max_cap,
+        'owner_name': owner_name,
+        'rem_cap': rem_cap,
     }
     return HttpResponse(template.render(context, request))
 

@@ -7,9 +7,10 @@
 <body>
 {% include "liga/navbar.html" %}
 
+
 <div class="container">
     <table class="table .table-sm">
-        <thead>
+        <thead> {{owner_name}}
             <tr>
                 <th scope="col">Position</th>
                 <th scope="col">Player Name</th>
@@ -29,19 +30,18 @@
             <tr>
                 <td><b>Max Cap: </b> </td>
                 <td></td>
-                <td>{{kevin_mcap}} </td>
+                <td>{{max_cap}} </td>
                 <td></td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
                 <td></td>
-                <td>{{kevin_rcap }} </td>
+                <td>{{rem_cap }} </td>
                 <td></td>
             </tr>
       </tbody>
     </table>
 </div>
-
 
 
 {% include "liga/jquery_include.html" %}
