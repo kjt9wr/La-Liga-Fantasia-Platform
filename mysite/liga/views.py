@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from .models import Owner
 from .models import Player
@@ -7,12 +8,9 @@ from django.template import loader
 
 
 def index(request):
-    #owner_list = Owner.objects.all()
-    template = loader.get_template('liga/index.html')
-    context = {
-        #'owner_list': owner_list,
-    }
-    return HttpResponse(template.render(context, request))
+    context = {}
+    return render(request, 'liga/index.html', context)
+
 
 
 def rosters(request, owner_id):
@@ -22,8 +20,6 @@ def rosters(request, owner_id):
     owner_name = Owner.objects.filter(pk=owner_id).values('name')[0]['name']
     max_cap = Owner.objects.filter(pk=owner_id).values('cap')[0]['cap']
     rem_cap = remaining(owner_name, max_cap)
-
-    template = loader.get_template('liga/rosters.html')
     context = {
         'roster_items': roster_items,
         'kevin': kevin,
@@ -31,7 +27,8 @@ def rosters(request, owner_id):
         'owner_name': owner_name,
         'rem_cap': rem_cap,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'liga/rosters.html', context)
+
 
 
 def remaining(name, max):

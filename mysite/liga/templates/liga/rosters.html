@@ -17,7 +17,8 @@
                 <th scope="col">Position</th>
                 <th scope="col">Player Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Keep?</th>
+                <th scope="col">Kept boolean</th>
+                <th scope="col">Keep Checkbox?</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
               <td>{{item.athlete.position}}</td>
               <td>{{item.athlete.name}}</td>
               <td>{{item.athlete.price}}</td>
+              <td>{{item.athlete.kept}}</td>
               <td> <input type="checkbox" aria-label="Checkbox for following text input"></td>
             </tr>
       {% endfor %}
@@ -34,11 +36,13 @@
                 <td></td>
                 <td>{{max_cap}} </td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
                 <td></td>
                 <td>{{rem_cap }} </td>
+                <td></td>
                 <td></td>
             </tr>
       </tbody>
