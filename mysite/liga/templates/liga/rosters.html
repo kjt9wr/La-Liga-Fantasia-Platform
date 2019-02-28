@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-      {% for item in kevin %}
+      {% for item in ownership %}
             <tr>
               <td>{{item.athlete.position}}</td>
               <td>{{item.athlete.name}}</td>
@@ -47,7 +47,17 @@
             </tr>
       </tbody>
     </table>
+    <form action="{% url 'liga:update' owner_id %}" method="post">
+        {% csrf_token %}
+        {% for item in ownership %}
+            <input type="radio" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}">
+            <label for="item{{ forloop.counter }}">{{ item.athlete.name }}</label><br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
 </div>
+
+
 
 
 </body>
