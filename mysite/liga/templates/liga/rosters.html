@@ -22,8 +22,7 @@
                 <th scope="col">Position</th>
                 <th scope="col">Player Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Kept boolean</th>
-                <th scope="col">Keep Checkbox?</th>
+                <th scope="col">Keep?</th>
             </tr>
         </thead>
 
@@ -34,7 +33,6 @@
               <td>{{item.athlete.position}}</td>
               <td>{{item.athlete.name}}</td>
               <td>{{item.athlete.price}}</td>
-              <td>{{item.athlete.kept}}</td>
               <td> <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"
                           {% if item.athlete.kept %} checked {% endif %} >
               </td>
@@ -44,14 +42,12 @@
                 <td><b>Max Cap: </b> </td>
                 <td></td>
                 <td>{{max_cap}} </td>
-                <td></td>
                 <td><input type="submit" value="Submit"></td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
                 <td></td>
                 <td>{{rem_cap }} </td>
-                <td></td>
                 <td></td>
             </tr>
       </tbody>
