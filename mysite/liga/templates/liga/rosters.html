@@ -26,7 +26,7 @@
                 <th scope="col">Keep Checkbox?</th>
             </tr>
         </thead>
-        
+
         <!-- Each player's information -->
         <tbody>
       {% for item in ownership %}
@@ -35,7 +35,7 @@
               <td>{{item.athlete.name}}</td>
               <td>{{item.athlete.price}}</td>
               <td>{{item.athlete.kept}}</td>
-              <td> <input type="radio" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"> </td>
+              <td> <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"> </td>
             </tr>
       {% endfor %}
             <tr>
