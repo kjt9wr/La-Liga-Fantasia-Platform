@@ -12,8 +12,8 @@ from django.template import loader
 
 def captracker(request):
     owner_list = Owner.objects.all()
-    template = loader.get_template('captracker/captracker.html')
     context = {
         'owner_list': owner_list,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'captracker/captracker.html', context)
+

@@ -1,28 +1,36 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">La Liga Fantasia</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+    <!-- Homepage -->
       <li class="nav-item">
         <a class="nav-link" href="/liga/">Homepage</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/liga/rosters">Rosters</a>
+    <!-- Rosters -->
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Rosters<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/liga/rosters/1">Kevin</a></li>
+          <li><a href="/liga/rosters/2">Justin</a></li>
+          <li><a href="/liga/rosters/3">Alex</a></li>
+          <li><a href="/liga/rosters/4">Nikos</a></li>
+          <li><a href="/liga/rosters/5">Luigi</a></li>
+          <li><a href="/liga/rosters/6">Michael</a></li>
+          <li><a href="/liga/rosters/7">Matt</a></li>
+          <li><a href="/liga/rosters/8">Chinmay</a></li>
+          <li><a href="/liga/rosters/9">Christain</a></li>
+          <li><a href="/liga/rosters/10">Brent</a></li>
+        </ul>
       </li>
-        <li class="nav-item">
+      <!-- Cap Tracker -->
+      <li class="nav-item">
         <a class="nav-link" href="/captracker">Cap Tracker</a>
       </li>
-      <li class="nav-item">
+      <!-- Franchise Tag -->
+      <<li class="nav-item">
         <a class="nav-link" href="/franchise">Franchise Tag</a>
       </li>
-
     </ul>
-
   </div>
 </nav>

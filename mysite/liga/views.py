@@ -1,36 +1,42 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 
 from .models import Owner
 from .models import Player
 from .models import Roster
 from django.template import loader
+from django.urls import reverse
+
+from liga.forms import LoginForm
 
 
 def index(request):
-    #owner_list = Owner.objects.all()
-    template = loader.get_template('liga/index.html')
-    context = {
-        #'owner_list': owner_list,
-    }
-    return HttpResponse(template.render(context, request))
+    context = {}
+    return render(request, 'liga/index.html', context)
 
 
-def rosters(request):
+
+def rosters(request, owner_id):
     roster_items = Roster.objects.all()
 
-    kevin = Roster.objects.filter(owner__name='Kevin')
-    kevin_mcap = Owner.objects.values('cap')[0]['cap']
-    kevin_rcap = remaining('Kevin', kevin_mcap)
-
-    template = loader.get_template('liga/rosters.html')
+    ownership = Roster.objects.filter(owner__pk=owner_id)
+    owner_name = Owner.objects.filter(pk=owner_id).values('name')[0]['name']
+    max_cap = Owner.objects.filter(pk=owner_id).values('cap')[0]['cap']
+    rem_cap = remaining(owner_name, max_cap)
     context = {
         'roster_items': roster_items,
-        'kevin': kevin,
-        'kevin_mcap': kevin_mcap,
-        'kevin_rcap': kevin_rcap,
+        'ownership': ownership,
+        'max_cap': max_cap,
+        'owner_name': owner_name,
+        'owner_id': owner_id,
+        'rem_cap': rem_cap,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'liga/rosters.html', context)
 
+
+##########
+#                Returns the owner's remaining cap based on max cap and kept players
+###########
 
 def remaining(name, max):
     temp = Roster.objects.filter(owner__name=name).filter(athlete__kept=True)
@@ -38,4 +44,28 @@ def remaining(name, max):
     for item in temp:
         sum = sum + item.athlete.price
     return max - sum
+
+
+##########
+#                Updates the player's kept attribute
+###########
+
+
+def update(request, owner_id):
+    owner = Owner.objects.get(pk=owner_id)
+    player_id_list = request.POST.getlist('item')
+    not_kept = Roster.objects.filter(owner_id=owner.id)
+
+    #change unchecked to False
+    for each_player in not_kept:
+        each_player.athlete.kept = False
+        each_player.athlete.save()
+
+    #Change checked to True
+    for player in player_id_list:
+        selected_player = Player.objects.get(pk=player)
+        selected_player.kept = True
+        selected_player.save()
+    return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
+
 

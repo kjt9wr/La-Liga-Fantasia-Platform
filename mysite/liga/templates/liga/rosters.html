@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Rosters</title>
+
+{% include "liga/jquery_include.html" %}
 </head>
 <body>
 {% include "liga/navbar.html" %}
-
+<!--
+    Main Table
+-->
 <div class="container">
+    <h1> {{owner_name}} </h1>
+    <form action="{% url 'liga:update' owner_id %}" method="post">
+        {% csrf_token %}
+
     <table class="table .table-sm">
         <thead>
             <tr>
@@ -17,34 +25,38 @@
                 <th scope="col">Keep?</th>
             </tr>
         </thead>
+
+        <!-- Each player's information -->
         <tbody>
-      {% for item in kevin %}
+      {% for item in ownership %}
             <tr>
               <td>{{item.athlete.position}}</td>
               <td>{{item.athlete.name}}</td>
               <td>{{item.athlete.price}}</td>
-              <td> <input type="checkbox" aria-label="Checkbox for following text input"></td>
+              <td> <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"
+                          {% if item.athlete.kept %} checked {% endif %} >
+              </td>
             </tr>
       {% endfor %}
             <tr>
                 <td><b>Max Cap: </b> </td>
                 <td></td>
-                <td>{{kevin_mcap}} </td>
-                <td></td>
+                <td>{{max_cap}} </td>
+                <td><input type="submit" value="Submit"></td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
                 <td></td>
-                <td>{{kevin_rcap }} </td>
+                <td>{{rem_cap }} </td>
                 <td></td>
             </tr>
       </tbody>
     </table>
+
+    </form>
+
 </div>
 
-
-
-{% include "liga/jquery_include.html" %}
 </body>
 </html>
 
