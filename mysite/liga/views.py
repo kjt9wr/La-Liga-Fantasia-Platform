@@ -54,12 +54,17 @@ def remaining(name, max):
 def update(request, owner_id):
     owner = Owner.objects.get(pk=owner_id)
     player_id_list = request.POST.getlist('item')
+    not_kept = Roster.objects.filter(owner_id=owner.id)
+
+    #change unchecked to False
+    for each_player in not_kept:
+        each_player.athlete.kept = False
+        each_player.athlete.save()
+
+    #Change checked to True
     for player in player_id_list:
         selected_player = Player.objects.get(pk=player)
-        if selected_player.kept == False:
-            selected_player.kept = True
-        else:
-            selected_player.kept = False
+        selected_player.kept = True
         selected_player.save()
     return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
 
