@@ -11,8 +11,14 @@ from django.template import loader
 
 
 def franchise(request):
-    player_list = Player.objects.filter(kept=True)
+    qb_list = Player.objects.filter(position="QB").order_by('-price').order_by('-price')
+    rb_list = Player.objects.filter(position="RB").filter(price__gte=20).order_by('-price')
+    wr_list = Player.objects.filter(position="WR").filter(price__gte=20).order_by('-price')
+    te_list = Player.objects.filter(position="TE").order_by('-price').order_by('-price')
     context = {
-        'player_list': player_list,
+        'qb_list': qb_list,
+        'rb_list': rb_list,
+        'wr_list': wr_list,
+        'te_list': te_list,
     }
     return render(request, 'franchise/franchise.html', context)

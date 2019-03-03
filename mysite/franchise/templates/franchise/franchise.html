@@ -3,21 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>Franchise</title>
+    {% include "liga/jquery_include.html" %}
 </head>
 <body>
 {% include "liga/navbar.html" %}
 
-    {% if player_list %}
-        <ul>
-        {% for player in player_list %}
-            <li>{{player.name}}: {{player.price}} </li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No Players are available.</p>
-    {% endif %}
+<div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
+            <div class="row">
+
+                <!--    Quarterback Section -->
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h3><center> Quarterback</center></h3>
+                    <table class="table .table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Keep?</th>
+                            </tr>
+                        </thead>
+                        <!-- Each player's information -->
+                        <tbody>
+                            {% for qb in qb_list %}
+                            <tr>
+                                <td> {{qb.name}} </td>
+                                <td> {{qb.price}} </td>
+                                <td> {{qb.kept}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--    Running Back Section -->
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h3><center> Running Back </center></h3>
+                    <table class="table .table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Keep?</th>
+                            </tr>
+                        </thead>
+                        <!-- Each player's information -->
+                        <tbody>
+                            {% for rb in rb_list %}
+                            <tr>
+                                <td> {{rb.name}} </td>
+                                <td> {{rb.price}} </td>
+                                <td> {{rb.kept}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
 
-{% include "liga/jquery_include.html" %}
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h3><center> Wide Receiver </center></h3>
+                    <table class="table .table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Keep?</th>
+                            </tr>
+                        </thead>
+                        <!-- Each player's information -->
+                        <tbody>
+                            {% for wr in wr_list %}
+                            <tr>
+                                <td> {{wr.name}} </td>
+                                <td> {{wr.price}} </td>
+                                <td> {{wr.kept}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h3> <center> Tight End </center></h3>
+                    <table class="table .table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Keep?</th>
+                            </tr>
+                        </thead>
+                        <!-- Each player's information -->
+                        <tbody>
+                            {% for te in te_list %}
+                            <tr>
+                                <td> {{te.name}} </td>
+                                <td> {{te.price}} </td>
+                                <td> {{te.kept}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
 </body>
 </html>
