@@ -13,7 +13,9 @@
 
                 <!--    Quarterback Section -->
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3><center> Quarterback</center></h3>
+                    <h3><center> Quarterback
+                    <br> Franchise tag: ${{tag_prices.0}}
+                    </center></h3>
                     <table class="table .table-sm">
                         <thead>
                             <tr>
@@ -28,7 +30,9 @@
                             <tr>
                                 <td> {{qb.name}} </td>
                                 <td> {{qb.price}} </td>
-                                <td> {{qb.kept}}</td>
+                                <td> <input type="checkbox" name="item" id="qb{{ forloop.counter }}" value="{{ qb.id }}"
+                                    {% if qb.kept %} checked {% endif %} >
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -37,7 +41,9 @@
 
                 <!--    Running Back Section -->
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3><center> Running Back </center></h3>
+                    <h3><center> Running Back
+                    <br> Franchise tag: ${{tag_prices.1}}
+                    </center></h3>
                     <table class="table .table-sm">
                         <thead>
                             <tr>
@@ -52,7 +58,9 @@
                             <tr>
                                 <td> {{rb.name}} </td>
                                 <td> {{rb.price}} </td>
-                                <td> {{rb.kept}}</td>
+                                <td> <input type="checkbox" name="item" id="rb{{ forloop.counter }}" value="{{ rb.id }}"
+                                    {% if rb.kept %} checked {% endif %} >
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -61,7 +69,9 @@
 
 
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3><center> Wide Receiver </center></h3>
+                    <h3><center> Wide Receiver
+                    <br> Franchise tag: ${{tag_prices.2}}
+                    </center></h3>
                     <table class="table .table-sm">
                         <thead>
                             <tr>
@@ -76,7 +86,9 @@
                             <tr>
                                 <td> {{wr.name}} </td>
                                 <td> {{wr.price}} </td>
-                                <td> {{wr.kept}}</td>
+                                <td> <input type="checkbox" name="item" id="wr{{ forloop.counter }}" value="{{ wr.id }}"
+                                    {% if wr.kept %} checked {% endif %} >
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -85,7 +97,9 @@
 
 
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3> <center> Tight End </center></h3>
+                    <h3> <center> Tight End
+                    <br> Franchise tag: ${{tag_prices.3}}
+                    </center></h3>
                     <table class="table .table-sm">
                         <thead>
                             <tr>
@@ -100,7 +114,9 @@
                             <tr>
                                 <td> {{te.name}} </td>
                                 <td> {{te.price}} </td>
-                                <td> {{te.kept}}</td>
+                                <td> <input type="checkbox" name="item" id="te{{ forloop.counter }}" value="{{ te.id }}"
+                                    {% if te.kept %} checked {% endif %} >
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

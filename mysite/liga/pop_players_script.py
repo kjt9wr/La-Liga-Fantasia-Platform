@@ -629,3 +629,15 @@ p.save()
 p = Player(name= 'Luke Kuechly', price= 10, position = 'D', kept = True )
 
 p.save()
+
+p = Player(name= 'QB Franchise', price= 10, position = 'QB', kept = True )
+p.save()
+
+p = Player(name= 'RB Franchise', price= 60, position = 'RB', kept = True )
+p.save()
+
+p = Player(name= 'WR Franchise', price= 30, position = 'WR', kept = True )
+p.save()
+
+p = Player(name= 'TE Franchise', price= 10, position = 'TE', kept = True )
+p.save()
