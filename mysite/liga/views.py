@@ -7,9 +7,6 @@ from .models import Roster
 from django.template import loader
 from django.urls import reverse
 
-from liga.forms import LoginForm
-
-
 def index(request):
     context = {}
     return render(request, 'liga/index.html', context)

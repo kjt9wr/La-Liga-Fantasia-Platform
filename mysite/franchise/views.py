@@ -1,12 +1,13 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from liga.models import Owner
 from liga.models import Player
 from liga.models import Roster
 from django.template import loader
+from django.urls import reverse
 
 
 
@@ -28,4 +29,6 @@ def franchise(request):
     return render(request, 'franchise/franchise.html', context)
 
 
-
+def update(request, position):
+    print(position + " update called\n")
+    return HttpResponseRedirect(reverse('franchise:index'))
