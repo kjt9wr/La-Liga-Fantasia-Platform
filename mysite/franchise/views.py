@@ -37,31 +37,33 @@ def update(request, position):
         player.kept = False
         player.save()
 
-    print("\n\n")
     for item in kept_list:
         selected_player = Player.objects.get(pk=item)
         selected_player.kept = True
         selected_player.save()
+
+    franchise_tag = Player.objects.get(name__exact=position + " Franchise")
+    #print(franchise_tag.name)
+    avg = average(kept_list)
+    franchise_tag.price = avg
+    franchise_tag.save()
+    print(avg)
     return HttpResponseRedirect(reverse('franchise:index'))
 
 
 
-#def update(request, owner_id):
- #   owner = Owner.objects.get(pk=owner_id)
-  #  player_id_list = request.POST.getlist('item')
- #   not_kept = Roster.objects.filter(owner_id=owner.id)
-
-    #change unchecked to False
- #   for each_player in not_kept:
- #       each_player.athlete.kept = False
- #       each_player.athlete.save()
-
-    #Change checked to True
- #   for player in player_id_list:
-#        selected_player = Player.objects.get(pk=player)
-  #      selected_player.kept = True
-   #     selected_player.save()
-    #return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
+##########
+#                Calculates franchise tag price
+##########
+def average(keeper_list):
+    sum = 0
+    iter = 0
+    for item in keeper_list:
+        sum = sum + Player.objects.get(pk=item).price
+        iter = iter + 1
+        if iter >= 5:
+            break
+    return int(sum/iter)
 
 
 

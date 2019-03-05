@@ -33,8 +33,7 @@ def rosters(request, owner_id):
 
 ##########
 #                Returns the owner's remaining cap based on max cap and kept players
-###########
-
+##########
 def remaining(name, max):
     temp = Roster.objects.filter(owner__name=name).filter(athlete__kept=True)
     sum = 0
@@ -45,9 +44,7 @@ def remaining(name, max):
 
 ##########
 #                Updates the player's kept attribute
-###########
-
-
+##########
 def update(request, owner_id):
     owner = Owner.objects.get(pk=owner_id)
     player_id_list = request.POST.getlist('item')
