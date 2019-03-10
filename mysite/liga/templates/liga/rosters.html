@@ -32,14 +32,27 @@
       {% for item in ownership %}
             <tr>
               <td>{{item.athlete.position}}</td>
-              <td>{{item.athlete.name}}</td>
+              <td> {% if item.athlete.ftag %} <b>{{item.athlete.name}} </b>
+                    {% else %} {{item.athlete.name}} {% endif %}
+              </td>
               <td>{{item.athlete.price}}</td>
               <td> <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"
                           {% if item.athlete.kept %} checked {% endif %} >
               </td>
-                <td> <input type="radio" name="franchise" id="franchise{{ forloop.counter }}" value="{{ item.athlete.id }}"></td>
+                <td> <input type="radio" name="franchise" id="franchise{{ forloop.counter }}" value="{{ item.athlete.id }}"
+                            {% if item.athlete.ftag %} checked {% endif %}>
+                </td>
             </tr>
       {% endfor %}
+            <tr>
+                <td></td>
+                <td>No Franchise Tag</td>
+                <td></td>
+                <td></td>
+                <td><input type="radio" name="franchise" id="franchise" value=""
+                            {% if item.athlete.ftag %} checked {% endif %}></td>
+
+            </tr>
             <tr>
                 <td><b>Max Cap: </b> </td>
                 <td></td>

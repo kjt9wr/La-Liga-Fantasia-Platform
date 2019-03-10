@@ -38,7 +38,14 @@ def remaining(name, max):
     temp = Roster.objects.filter(owner__name=name).filter(athlete__kept=True)
     sum = 0
     for item in temp:
-        sum = sum + item.athlete.price
+        if item.athlete.ftag:
+            print("Change value\n")
+            pos = item.athlete.position
+            tag_price_player = Player.objects.get(position=pos, name__contains='Franchise')
+            tag_price = tag_price_player.price
+            sum = sum + tag_price
+        else:
+            sum = sum + item.athlete.price
     return max - sum
 
 
@@ -48,11 +55,14 @@ def remaining(name, max):
 def update(request, owner_id):
     owner = Owner.objects.get(pk=owner_id)
     player_id_list = request.POST.getlist('item')
+    ftagged = request.POST.get('franchise')
     not_kept = Roster.objects.filter(owner_id=owner.id)
+
 
     #change unchecked to False
     for each_player in not_kept:
         each_player.athlete.kept = False
+        each_player.athlete.ftag = False
         each_player.athlete.save()
 
     #Change checked to True
@@ -60,6 +70,15 @@ def update(request, owner_id):
         selected_player = Player.objects.get(pk=player)
         selected_player.kept = True
         selected_player.save()
+
+    #Manage franchise tag
+    if(ftagged):
+        tagged_player = Player.objects.get(pk=ftagged)
+        tagged_player.ftag = True
+        tagged_player.kept = True
+        print("Changing " + tagged_player.name + " to true")
+        tagged_player.save()
+
     return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
 
 
