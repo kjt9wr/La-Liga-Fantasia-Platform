@@ -23,6 +23,7 @@
                 <th scope="col">Player Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Keep?</th>
+                <th scope="col">Franchise Tag</th>
             </tr>
         </thead>
 
@@ -36,18 +37,21 @@
               <td> <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.athlete.id }}"
                           {% if item.athlete.kept %} checked {% endif %} >
               </td>
+                <td> <input type="radio" name="franchise" id="franchise{{ forloop.counter }}" value="{{ item.athlete.id }}"></td>
             </tr>
       {% endfor %}
             <tr>
                 <td><b>Max Cap: </b> </td>
                 <td></td>
                 <td>{{max_cap}} </td>
-                <td><input type="submit" value="Submit"></td>
+                <td></td>
+                <td> <input type="submit" value="Submit"> </td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
                 <td></td>
                 <td>{{rem_cap }} </td>
+                <td></td>
                 <td></td>
             </tr>
       </tbody>
