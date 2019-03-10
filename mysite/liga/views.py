@@ -6,6 +6,7 @@ from .models import Player
 from .models import Roster
 from django.template import loader
 from django.urls import reverse
+from franchise.views import average
 
 def index(request):
     context = {}
@@ -13,6 +14,9 @@ def index(request):
 
 
 
+##########
+#                Render Rosters Page
+##########
 def rosters(request, owner_id):
     roster_items = Roster.objects.all()
 
@@ -81,23 +85,18 @@ def update(request, owner_id):
     return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
 
 
-def average(keeper_list):
-    sum = 0
-    iter = 0
-    for item in keeper_list:
-        sum = sum + Player.objects.get(pk=item).price
-        iter = iter + 1
-        if iter >= 5:
-            break
-    return int(sum/iter)
-
-
+##########
+#                Update all 4 Franchise Tag Prices
+##########
 def update_all_tags():
     positions= ["QB", "RB", "WR", "TE"]
     for item in positions:
         update_franchise_tag(item)
 
 
+##########
+#                Update the Franchise Tag for parameter position
+##########
 def update_franchise_tag(pos):
     # Get Franchise Tag Player
     tag_price_player = Player.objects.get(name__exact=pos + " Franchise")
