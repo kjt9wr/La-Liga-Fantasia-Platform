@@ -20,6 +20,7 @@ def rosters(request, owner_id):
     owner_name = Owner.objects.filter(pk=owner_id).values('name')[0]['name']
     max_cap = Owner.objects.filter(pk=owner_id).values('cap')[0]['cap']
     rem_cap = remaining(owner_name, max_cap)
+
     context = {
         'roster_items': roster_items,
         'ownership': ownership,
@@ -38,19 +39,18 @@ def remaining(name, max):
     temp = Roster.objects.filter(owner__name=name).filter(athlete__kept=True)
     sum = 0
     for item in temp:
+        # Account for Franchise Tag
         if item.athlete.ftag:
-            print("Change value\n")
             pos = item.athlete.position
-            tag_price_player = Player.objects.get(position=pos, name__contains='Franchise')
-            tag_price = tag_price_player.price
-            sum = sum + tag_price
+            tag_price_player = Player.objects.get(name__exact=pos + " Franchise")
+            sum = sum + tag_price_player.price
         else:
             sum = sum + item.athlete.price
     return max - sum
 
 
 ##########
-#                Updates the player's kept attribute
+#                FORM: Updates the player's kept attribute
 ##########
 def update(request, owner_id):
     owner = Owner.objects.get(pk=owner_id)
@@ -58,27 +58,58 @@ def update(request, owner_id):
     ftagged = request.POST.get('franchise')
     not_kept = Roster.objects.filter(owner_id=owner.id)
 
-
-    #change unchecked to False
+    # Defaults all to false
     for each_player in not_kept:
         each_player.athlete.kept = False
         each_player.athlete.ftag = False
         each_player.athlete.save()
 
-    #Change checked to True
+    # Change checked to True
     for player in player_id_list:
         selected_player = Player.objects.get(pk=player)
         selected_player.kept = True
         selected_player.save()
 
-    #Manage franchise tag
+    # Manage franchise tag
     if(ftagged):
         tagged_player = Player.objects.get(pk=ftagged)
         tagged_player.ftag = True
         tagged_player.kept = True
-        print("Changing " + tagged_player.name + " to true")
         tagged_player.save()
 
+    update_all_tags()
     return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
 
 
+def average(keeper_list):
+    sum = 0
+    iter = 0
+    for item in keeper_list:
+        sum = sum + Player.objects.get(pk=item).price
+        iter = iter + 1
+        if iter >= 5:
+            break
+    return int(sum/iter)
+
+
+def update_all_tags():
+    positions= ["QB", "RB", "WR", "TE"]
+    for item in positions:
+        update_franchise_tag(item)
+
+
+def update_franchise_tag(pos):
+    # Get Franchise Tag Player
+    tag_price_player = Player.objects.get(name__exact=pos + " Franchise")
+    # Queryset of all kept players at position
+    kept_players = Player.objects.filter(position=pos, kept=True).exclude(name__contains='Franchise').order_by('-price')
+
+    # Get list of PKs
+    kept_list = []
+    for player in kept_players:
+        kept_list.append(player.pk)
+
+    # Change franchise tag price
+    avg = average(kept_list)
+    tag_price_player.price = avg
+    tag_price_player.save()
