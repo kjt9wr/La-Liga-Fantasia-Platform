@@ -10,7 +10,9 @@ from django.template import loader
 from django.urls import reverse
 
 
-
+##########
+#                Render Franchise Tag Page
+##########
 def franchise(request):
     qb_list = get_list("QB")
     rb_list = get_list("RB")
@@ -29,6 +31,9 @@ def franchise(request):
     return render(request, 'franchise/franchise.html', context)
 
 
+##########
+#                Update the Franchise Tag Price based on form
+##########
 def update(request, position):
     list = get_list(position)
     kept_list = request.POST.getlist('item')
@@ -43,7 +48,6 @@ def update(request, position):
         selected_player.save()
 
     franchise_tag = Player.objects.get(name__exact=position + " Franchise")
-    #print(franchise_tag.name)
     avg = average(kept_list)
     franchise_tag.price = avg
     franchise_tag.save()
@@ -67,6 +71,9 @@ def average(keeper_list):
 
 
 
+##########
+#                Returns queryset of players filtered by specific position
+##########
 def get_list(position):
     if position == "QB" or position == "TE":
         return Player.objects.filter(position=position).exclude(name__contains='Franchise').order_by('-price')
