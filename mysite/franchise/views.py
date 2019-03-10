@@ -8,6 +8,7 @@ from liga.models import Player
 from liga.models import Roster
 from django.template import loader
 from django.urls import reverse
+from liga.functions import update_franchise_tag
 
 
 ##########
@@ -32,7 +33,7 @@ def franchise(request):
 
 
 ##########
-#                Update the Franchise Tag Price based on form
+#                FORM: Update the Franchise Tag Price
 ##########
 def update(request, position):
     list = get_list(position)
@@ -47,28 +48,8 @@ def update(request, position):
         selected_player.kept = True
         selected_player.save()
 
-    franchise_tag = Player.objects.get(name__exact=position + " Franchise")
-    avg = average(kept_list)
-    franchise_tag.price = avg
-    franchise_tag.save()
-    print(avg)
+    update_franchise_tag(position)
     return HttpResponseRedirect(reverse('franchise:index'))
-
-
-
-##########
-#                Calculates franchise tag price
-##########
-def average(keeper_list):
-    sum = 0
-    iter = 0
-    for item in keeper_list:
-        sum = sum + Player.objects.get(pk=item).price
-        iter = iter + 1
-        if iter >= 5:
-            break
-    return int(sum/iter)
-
 
 
 ##########
@@ -78,5 +59,5 @@ def get_list(position):
     if position == "QB" or position == "TE":
         return Player.objects.filter(position=position).exclude(name__contains='Franchise').order_by('-price')
     else:
-        return Player.objects.filter(position=position).exclude(name__contains='Franchise').filter(price__gte=20).order_by('-price')
-
+        return Player.objects.filter(position=position).exclude(name__contains='Franchise').filter(
+            price__gte=20).order_by('-price')
