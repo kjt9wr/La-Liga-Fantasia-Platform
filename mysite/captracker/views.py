@@ -17,3 +17,19 @@ def captracker(request):
     }
     return render(request, 'captracker/captracker.html', context)
 
+def viewTrade(request, tid):
+    owner_list = Owner.objects.all()
+    context = {
+        'owner_list': owner_list,
+        'tid': tid,
+    }
+    return render(request, 'captracker/viewTrade.html', context)
+
+
+def addTrade(request):
+    owner_list = Owner.objects.all()
+    context = {
+        'owner_list': owner_list,
+    }
+    return render(request, 'captracker/addTrade.html', context)
+
