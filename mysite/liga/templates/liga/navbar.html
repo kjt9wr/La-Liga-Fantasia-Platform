@@ -6,30 +6,30 @@
     <ul class="nav navbar-nav">
     <!-- Homepage -->
       <li class="nav-item">
-        <a class="nav-link" href="/liga/">Homepage</a>
+        <a class="nav-link" href="{% url 'liga:index' %}">Homepage</a>
       </li>
     <!-- Rosters -->
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Rosters<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="/liga/rosters/1">Kevin</a></li>
-          <li><a href="/liga/rosters/2">Justin</a></li>
-          <li><a href="/liga/rosters/3">Alex</a></li>
-          <li><a href="/liga/rosters/4">Nikos</a></li>
-          <li><a href="/liga/rosters/5">Luigi</a></li>
-          <li><a href="/liga/rosters/6">Michael</a></li>
-          <li><a href="/liga/rosters/7">Matt</a></li>
-          <li><a href="/liga/rosters/8">Chinmay</a></li>
-          <li><a href="/liga/rosters/9">Christain</a></li>
-          <li><a href="/liga/rosters/10">Brent</a></li>
+          <li><a href="{% url 'liga:rosters' 1 %}">Kevin</a></li>
+          <li><a href="{% url 'liga:rosters' 2 %}">Justin</a></li>
+          <li><a href="{% url 'liga:rosters' 3 %}">Alex</a></li>
+          <li><a href="{% url 'liga:rosters' 4 %}">Nikos</a></li>
+          <li><a href="{% url 'liga:rosters' 5 %}">Luigi</a></li>
+          <li><a href="{% url 'liga:rosters' 6 %}">Michael</a></li>
+          <li><a href="{% url 'liga:rosters' 7 %}">Matt</a></li>
+          <li><a href="{% url 'liga:rosters' 8 %}">Chinmay</a></li>
+          <li><a href="{% url 'liga:rosters' 9 %}">Christain</a></li>
+          <li><a href="{% url 'liga:rosters' 10 %}">Brent</a></li>
         </ul>
       </li>
       <!-- Franchise Tag -->
-      <<li class="nav-item">
-        <a class="nav-link" href="/franchise">Franchise Tag</a>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'franchise:index' %}">Franchise Tag</a>
       </li>
       <!-- Cap Tracker -->
       <li class="nav-item">
-        <a class="nav-link" href="/captracker">Cap Tracker</a>
+        <a class="nav-link" href="{% url 'captracker:captracker' %}">Cap Tracker</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin</a>
