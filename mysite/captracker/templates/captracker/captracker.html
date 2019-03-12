@@ -29,7 +29,7 @@
             <!-- Trades -->
             {% for trade in cap_exchange %}
             <tr>
-                <td> Trade {{trade.0}} </td>
+                <td> <a href="{% url 'viewTrade' trade.0 %}"> Trade {{trade.0}} </a> </td>
                 {% for owner in owner_list %}
                 <td>
                 {% if trade.1.oid == owner.pk %}

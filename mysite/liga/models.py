@@ -32,7 +32,7 @@ class Trade(models.Model):
     recipient = models.ForeignKey(Owner, on_delete=models.CASCADE)
     giver = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name="givers")
     athlete = models.ForeignKey(Player, on_delete=models.CASCADE)
-    cap = models.IntegerField()
+    cap = models.IntegerField(blank=True, null= True)
 
     def __str__(self):
         return self.giver.name + " gives " + self.athlete.name + " and $" + str(self.cap) + " to " + self.recipient.name

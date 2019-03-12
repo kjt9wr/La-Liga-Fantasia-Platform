@@ -8,17 +8,19 @@ from liga.models import Roster
 from django.template import loader
 
 
-# Create your views here.
-
-
+##########
+# #              Render Cap Tracker Page
+##########
 def captracker(request):
     owner_list = Owner.objects.all()
     trades = Trade.objects.all()
+    cap_movements = Trade.objects.filter(cap__isnull=False)
     cap_exchange = []
-    for trade in trades:
+
+    for trade in cap_movements:
         curr = store_trade(trade.tradeID, trade.recipient.pk, trade.giver.pk, trade.cap)
         cap_exchange.append(curr)
-    print(cap_exchange)
+
     context = {
         'owner_list': owner_list,
         'trades': trades,
@@ -26,16 +28,26 @@ def captracker(request):
     }
     return render(request, 'captracker/captracker.html', context)
 
-
+##########
+# #              Render View Trade Page
+##########
 def viewTrade(request, tid):
     owner_list = Owner.objects.all()
+    trades = Trade.objects.filter(tradeID=tid)
+    full_trade = parse_full_trade(trades)
+
+    parse_full_trade(trades)
     context = {
         'owner_list': owner_list,
         'tid': tid,
+        'trade': full_trade,
     }
     return render(request, 'captracker/viewTrade.html', context)
 
 
+##########
+# #              Render Add Trade Page
+##########
 def addTrade(request):
     owner_list = Owner.objects.all()
     context = {
@@ -44,14 +56,19 @@ def addTrade(request):
     return render(request, 'captracker/addTrade.html', context)
 
 
+##########
+# #              Returns Array of TradeID, Dict of first owner, dict of second owner
+##########
 def store_trade(tid, f_owner_pk, s_owner_pk, cap):
     f_owner = owner_recs(f_owner_pk, cap)
     s_owner = owner_recs(s_owner_pk, cap*-1)
     my_trade = [tid, f_owner, s_owner]
-    print(str(tid))
     return my_trade
 
 
+##########
+# #              Returns Dictionary of owner key and cap received
+##########
 def owner_recs(owner_pk, cap_received):
     dict1 = {
         'oid': owner_pk,
@@ -59,8 +76,43 @@ def owner_recs(owner_pk, cap_received):
     }
     return dict1
 
-# [{},{}]
-# {   oid: num
-#     cap rec: num
-#     players rec: [pid1,pid2...]
-#    }
+
+##########
+# #              Returns Array of 2 Dicts:
+# #                 {   owner: <Owner>
+# #                     cap: num
+# #                     players_received: [<Player1> , <Player2>, ...]
+# #                 }
+##########
+def parse_full_trade(trade_items):
+    full_trade = []
+    first = 0
+
+    # Everything first owner receives
+    dict1 = {}
+    p1_recs = []
+
+    # Everything second owner receives
+    dict2 = {}
+    p2_recs = []
+
+    for asset in trade_items:
+        if first == 0:
+            dict1['owner'] = asset.recipient
+            dict2['owner'] = asset.giver
+            dict1['cap'] = asset.cap
+            dict2['cap'] = asset.cap * -1
+            first += 1
+
+        # if owner1 is recipient
+        if asset.recipient == dict1['owner']:
+            p1_recs.append(asset.athlete)
+        else:
+            p2_recs.append(asset.athlete)
+
+    dict1['players_received'] = p1_recs
+    dict2['players_received'] = p2_recs
+    full_trade.append(dict1)
+    full_trade.append(dict2)
+    return full_trade
+
