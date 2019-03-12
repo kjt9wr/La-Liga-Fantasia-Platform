@@ -7,15 +7,35 @@
 <body>
 {% include "liga/navbar.html" %}
 
-{% if owner_list %}
-    <ul>
-    {% for owner in owner_list %}
-        <li>{{owner.name}} - {{owner.cap}} </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No Owners are available.</p>
-{% endif %}
+<div class="container">
+
+    <table class="table .table-sm">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                {% for owner in owner_list %}
+                <th scope="col">{{owner.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Cap -->
+            <tr>
+                <td><b>Cap Space</b></td>
+                {% for owner in owner_list %}
+                <td> {{owner.cap}} </td>
+                {% endfor %}
+            </tr>
+            <!-- Trades -->
+            <tr>
+
+            </tr>
+
+      </tbody>
+    </table>
+</div>
+
+
 
 
 {% include "liga/jquery_include.html" %}
