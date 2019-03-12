@@ -21,20 +21,20 @@ def average(keeper_list):
         iter = iter + 1
         if iter >= 5:
             break
-    return int(sum/iter)
+    return int(sum / iter)
 
 
 ##########
 #                Update all 4 Franchise Tag Prices
 ##########
 def update_all_tags():
-    positions= ["QB", "RB", "WR", "TE"]
+    positions = ["QB", "RB", "WR", "TE"]
     for item in positions:
         update_franchise_tag(item)
 
 
 ##########
-#                Update the Franchise Tag for parameter position
+#                Update the Franchise Tag Player Price for parameter position
 ##########
 def update_franchise_tag(pos):
     # Get Franchise Tag Player
@@ -51,3 +51,11 @@ def update_franchise_tag(pos):
     avg = average(kept_list)
     tag_price_player.price = avg
     tag_price_player.save()
+
+
+def keeper_update(kept_list):
+    # Change checked to True
+    for player in kept_list:
+        selected_player = Player.objects.get(pk=player)
+        selected_player.kept = True
+        selected_player.save()

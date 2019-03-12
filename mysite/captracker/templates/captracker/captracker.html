@@ -32,9 +32,9 @@
             <td><a href="{% url 'captracker:viewTrade' trade.0 %}"> Trade {{trade.0}} </a></td>
             {% for owner in owner_list %}
             <td>
-                {% if trade.1.oid == owner.pk %}
+                {% if trade.1.owner == owner %}
                 {{ trade.1.cap_rec }}
-                {% elif trade.2.oid == owner.pk %}
+                {% elif trade.2.owner == owner %}
                 {{ trade.2.cap_rec }}
                 {% endif %}
             </td>

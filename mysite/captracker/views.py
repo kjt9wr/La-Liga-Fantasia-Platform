@@ -18,7 +18,7 @@ def captracker(request):
     cap_exchange = []
 
     for trade in cap_movements:
-        curr = store_trade(trade.tradeID, trade.recipient.pk, trade.giver.pk, trade.cap)
+        curr = parse_cap_trade(trade.tradeID, trade.recipient, trade.giver, trade.cap)
         cap_exchange.append(curr)
 
     context = {
@@ -57,11 +57,13 @@ def addTrade(request):
 
 
 ##########
-# #              Returns Array of TradeID, Dict of first owner, dict of second owner
+# #
+# #              Returns [tid, {'owner': <Owner>, 'cap_rec': cap_received}, {'owner': <Owner>, 'cap_rec': cap_received}]
+# #
 ##########
-def store_trade(tid, f_owner_pk, s_owner_pk, cap):
-    f_owner = owner_recs(f_owner_pk, cap)
-    s_owner = owner_recs(s_owner_pk, cap*-1)
+def parse_cap_trade(tid, f_owner, s_owner, cap):
+    f_owner = owner_recs(f_owner, cap)
+    s_owner = owner_recs(s_owner, cap*-1)
     my_trade = [tid, f_owner, s_owner]
     return my_trade
 
@@ -69,9 +71,9 @@ def store_trade(tid, f_owner_pk, s_owner_pk, cap):
 ##########
 # #              Returns Dictionary of owner key and cap received
 ##########
-def owner_recs(owner_pk, cap_received):
+def owner_recs(owner, cap_received):
     dict1 = {
-        'oid': owner_pk,
+        'owner': owner,
         'cap_rec': cap_received,
     }
     return dict1
@@ -79,10 +81,10 @@ def owner_recs(owner_pk, cap_received):
 
 ##########
 # #              Returns Array of 2 Dicts:
-# #                 {   owner: <Owner>
+# #                 [{   owner: <Owner>
 # #                     cap: num
 # #                     players_received: [<Player1> , <Player2>, ...]
-# #                 }
+# #                 }, ...]
 ##########
 def parse_full_trade(trade_items):
     full_trade = []
@@ -100,8 +102,8 @@ def parse_full_trade(trade_items):
         if first == 0:
             dict1['owner'] = asset.recipient
             dict2['owner'] = asset.giver
-            dict1['cap'] = asset.cap
-            dict2['cap'] = asset.cap * -1
+            dict1['cap_rec'] = asset.cap
+            dict2['cap_rec'] = asset.cap * -1
             first += 1
 
         # if owner1 is recipient

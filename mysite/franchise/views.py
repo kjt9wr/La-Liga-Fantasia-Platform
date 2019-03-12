@@ -8,7 +8,7 @@ from liga.models import Player
 from liga.models import Roster
 from django.template import loader
 from django.urls import reverse
-from liga.functions import update_franchise_tag
+from liga.functions import update_franchise_tag, keeper_update
 
 
 ##########
@@ -43,11 +43,7 @@ def update(request, position):
         player.kept = False
         player.save()
 
-    for item in kept_list:
-        selected_player = Player.objects.get(pk=item)
-        selected_player.kept = True
-        selected_player.save()
-
+    keeper_update(kept_list)
     update_franchise_tag(position)
     return HttpResponseRedirect(reverse('franchise:index'))
 
