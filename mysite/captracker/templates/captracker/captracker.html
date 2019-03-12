@@ -27,10 +27,22 @@
                 {% endfor %}
             </tr>
             <!-- Trades -->
+            {% for trade in cap_exchange %}
             <tr>
-
+                <td> Trade {{trade.0}} </td>
+                {% for owner in owner_list %}
+                <td>
+                {% if trade.1.oid == owner.pk %}
+                    {{ trade.1.cap_rec }}
+                {% elif trade.2.oid == owner.pk %}
+                    {{ trade.2.cap_rec }}
+                    {% endif %}
+                </td>
+                {% endfor %}
             </tr>
+            {% endfor %}
 
+<!-- [1, {'oid': 1, 'cap_rec': 5}, {'oid': 6, 'cap_rec': -5}] -->
       </tbody>
     </table>
 </div>
