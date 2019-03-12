@@ -6,8 +6,12 @@
 </head>
 <body>
 {% include "liga/navbar.html" %}
-<a href="{% url 'captracker' %}"> Back to Cap Tracker </a>
+
+
 <div class="container"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
+    <a href="{% url 'captracker' %}" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-arrow-left"></span> Back to Cap Tracker
+        </a>
     <div class="row">
 
     <!-- Owner 1 Receives -->
