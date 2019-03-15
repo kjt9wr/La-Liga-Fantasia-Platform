@@ -8,35 +8,38 @@
     My form
     <div class="row">
         <!-- Owner 1 -->
-         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-             Owner 1:
-        <select id="owner1">
-            {% for owner in owner_list %}
-            <option value={{owner.pk}} name={{owner.name}}> {{owner.name}}</option>
-            {% endfor %}
-        </select>
-         </div>
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            Owner 1:
+            <select id="owner1">
+                <option value=-99 name="none"> Select a Owner</option>
+                {% for owner in owner_list %}
+                <option value={{owner.pk}} name={{owner.name}}> {{owner.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         <!-- Owner 2 -->
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             Owner 2:
-        <select id="owner2">
-            {% for owner in owner_list %}
-            <option value={{owner.pk}}> {{owner.name}}</option>
-            {% endfor %}
-        </select>
-         </div>
+            <select id="owner2">
+                <option value=-99 name="none"> Select a Owner</option>
+                {% for owner in owner_list %}
+                <option value={{owner.pk}}> {{owner.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
 
 </div>
 {% endblock form_content %}
 
-{% block owner1 %}<span id="fowner"> Kevin</span> {% endblock owner1 %}
-{% block owner2 %} <span id="sowner"> Kevin</span> {% endblock owner2 %}
+{% block owner1 %}<span id="fowner">Owner 1</span> {% endblock owner1 %}
+{% block owner2 %} <span id="sowner">Owner 2</span> {% endblock owner2 %}
 
 
 {% block scripts %}
 <script>
+
     $('#owner1').on('change', function(){
        console.log($('#owner1').val());
         filterList("owner1", "owner2");
