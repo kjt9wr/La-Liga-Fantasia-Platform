@@ -6,12 +6,12 @@ from .models import Player
 from .models import Roster
 from django.template import loader
 from django.urls import reverse
-from .functions import update_all_tags
+from .functions import update_all_tags, keeper_update
+
 
 def index(request):
     context = {}
     return render(request, 'liga/index.html', context)
-
 
 
 ##########
@@ -69,13 +69,10 @@ def update(request, owner_id):
         each_player.athlete.save()
 
     # Change checked to True
-    for player in player_id_list:
-        selected_player = Player.objects.get(pk=player)
-        selected_player.kept = True
-        selected_player.save()
+    keeper_update(player_id_list)
 
     # Manage franchise tag
-    if(ftagged):
+    if (ftagged):
         tagged_player = Player.objects.get(pk=ftagged)
         tagged_player.ftag = True
         tagged_player.kept = True
@@ -83,5 +80,3 @@ def update(request, owner_id):
 
     update_all_tags()
     return HttpResponseRedirect(reverse('liga:rosters', args=(owner.id,)))
-
-

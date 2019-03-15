@@ -6,72 +6,65 @@
 </head>
 <body>
 {% include "liga/navbar.html" %}
-<a href="{% url 'captracker' %}"> Back to Cap Tracker </a>
+
+
 <div class="container"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
+    <a href="{% url 'captracker:captracker' %}" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-arrow-left"></span> Back to Cap Tracker
+    </a>
     <div class="row">
 
-    <!-- Owner 1 Receives -->
-     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-         <table class="table .table-sm">
-             <thead>
+        <!-- Owner 1 Receives -->
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <table class="table .table-sm">
+                <thead>
                 <tr>
                     <th scope="col">{{trade.0.owner}} Receives</th>
                 </tr>
-             </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <!-- Cap -->
                 <tr>
-                    {%if trade.0.cap > 0 %} <td>$ {{trade.0.cap}} </td> {% endif %}
+                    {%if trade.0.cap_rec > 0 %}
+                    <td>$ {{trade.0.cap_rec}}</td>
+                    {% endif %}
                 </tr>
                 <!-- Players -->
                 {%for i in trade.0.players_received %}
                 <tr>
-                    <td>{{ i.name }} </td>
+                    <td>{{ i.name }}</td>
                 </tr>
                 {% endfor %}
-            </tbody>
-         </table>
-     </div>
-     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"> </div>
-     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-         <table class="table .table-sm">
-             <thead>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <table class="table .table-sm">
+                <thead>
                 <tr>
                     <th scope="col">{{trade.1.owner}} Receives</th>
                 </tr>
-             </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <!-- Cap -->
                 <tr>
-                    {%if trade.1.cap > 0 %} <td> $ {{trade.1.cap}} </td> {% endif %}
+                    {%if trade.1.cap_rec > 0 %}
+                    <td> $ {{trade.1.cap_rec}}</td>
+                    {% endif %}
                 </tr>
                 <!-- Players -->
                 {%for i in trade.1.players_received %}
                 <tr>
-                    <td>{{ i.name }} </td>
+                    <td>{{ i.name }}</td>
                 </tr>
                 {% endfor %}
-            </tbody>
-         </table>
-     </div>
-
-
-
-
-<!-- ##########
-# #              Returns Array of 2 Dicts:
-# #                 {   owner: <Owner>
-# #                     cap: num
-# #                     players_received: [<Player1> , <Player2>, ...]
-# #                 }
-# #                 {   owner: <Owner>
-# #                     cap: num
-# #                     players_received: [<Player1> , <Player2>, ...]
-# #                 }
-##########-->
-      </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+        </tbody>
+        </table>
+    </div>
 </div>
 
 
