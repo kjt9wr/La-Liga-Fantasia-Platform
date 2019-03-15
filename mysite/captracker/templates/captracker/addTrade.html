@@ -12,7 +12,7 @@
              Owner 1:
         <select id="owner1">
             {% for owner in owner_list %}
-            <option value={{owner.pk}}> {{owner.name}}</option>
+            <option value={{owner.pk}} name={{owner.name}}> {{owner.name}}</option>
             {% endfor %}
         </select>
          </div>
@@ -31,22 +31,31 @@
 </div>
 {% endblock form_content %}
 
+{% block owner1 %}<span id="fowner"> Kevin</span> {% endblock owner1 %}
+{% block owner2 %} <span id="sowner"> Kevin</span> {% endblock owner2 %}
+
+
 {% block scripts %}
 <script>
-
     $('#owner1').on('change', function(){
        console.log($('#owner1').val());
-        $("#owner2 > option").each(function() {
-         $(this).show();
-            if( $('#owner1').val() == $(this).val()){
-              $(this).hide();
-            }
-        });
+        filterList("owner1", "owner2");
+        $("span#fowner").text($('#owner1 option:selected').text());
     });
 
-
+    $('#owner2').on('change', function(){
+       console.log($('#owner2').val());
+        filterList("owner2", "owner1");
+        $("span#sowner").text($('#owner2 option:selected').text());
+    });
 
     function filterList(o1, o2) {
+        $("#" + o2 + " > option").each(function() {
+             $(this).show();
+                if( $('#' + o1).val() == $(this).val()){
+                  $(this).hide();
+                }
+        });
     }
 
 </script>
