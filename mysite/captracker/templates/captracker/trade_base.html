@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block Title %}{% endblock Title %}</title>
+</head>
+<body>
+{% include "liga/navbar.html" %}
+
+
+<div class="container"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
+    <a href="{% url 'captracker:captracker' %}" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-arrow-left"></span> Back to Cap Tracker
+    </a>
+    <div class="row">
+
+        <!-- Owner 1 Receives -->
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <table class="table .table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">{% block owner1 %} {% endblock owner1 %} Receives</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% block table1_body %} {% endblock table1_body %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+
+        <!-- Owner 2 Receives -->
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <table class="table .table-sm">
+                <thead>
+                <tr>
+                    <th scope="col"> {% block owner2 %} {% endblock owner2 %} Receives</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% block table2_body %} {% endblock table2_body %}
+                </tbody>
+            </table>
+        </div>
+        </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% include "liga/jquery_include.html" %}
+</body>
+</html>
+</html>

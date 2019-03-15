@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add New Trade</title>
-</head>
-<body>
-{% include "liga/navbar.html" %}
-<div class="container">
-    <a href="{% url 'captracker:captracker' %}" class="btn btn-default btn-sm">
-        <span class="glyphicon glyphicon-arrow-left"></span> Back to Cap Tracker
-    </a>
-</div>
-{% include "liga/jquery_include.html" %}
-</body>
-</html>
-</html>
+{% extends "./trade_base.html" %}
+
+{% block Title %} Add Trade{% endblock Title %}
