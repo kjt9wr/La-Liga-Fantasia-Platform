@@ -12,7 +12,7 @@
             <div>
                 Owner 1:
                 <select id="owner1">
-                    <option value=-99 name="none"> Select a Owner</option>
+                    <option value=-99 name="none"> Select an Owner</option>
                     {% for owner in owner_list %}
                     <option value={{owner.pk}} name={{owner.name}}> {{owner.name}}</option>
                     {% endfor %}
@@ -37,7 +37,7 @@
             <div>
                 Owner 2:
                 <select id="owner2">
-                    <option value=-99 name="none"> Select a Owner</option>
+                    <option value=-99 name="none"> Select an Owner</option>
                     {% for owner in owner_list %}
                     <option value={{owner.pk}}> {{owner.name}}</option>
                     {% endfor %}
@@ -61,13 +61,13 @@
     <br>
     <div class="row">
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <span id="cap1">Cap: <input type="number"> </span>
+            <span id="cap1">Cap: <input type="number" id="caprec1"> </span>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             <button class="glyphicon glyphicon-arrow-right" id="switchCap"></button>
         </div>
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <span id="cap2" style="display:none">Cap: <input type="number"> </span>
+            <span id="cap2" style="display:none">Cap: <input type="number" id="caprec2"> </span>
         </div>
 
     </div>
@@ -83,13 +83,14 @@
 
 $(document).ready(function(){
     $("button#switchCap").click(function(){
+            capSwap();
             $("#cap1").toggle();
             $("#cap2").toggle();
             $("button#switchCap").toggleClass("glyphicon-arrow-right");
             $("button#switchCap").toggleClass("glyphicon-arrow-left");
     })
 });
-    //Changing owner 1
+    // Changing owner 1
     $('#owner1').on('change', function(){
        console.log($('#owner1').val());
         filterList("owner1", "owner2");
@@ -97,7 +98,7 @@ $(document).ready(function(){
         $("span#fowner").text($('#owner1 option:selected').text());
     });
 
-    //Changing owner 2
+    // Changing owner 2
     $('#owner2').on('change', function(){
        console.log($('#owner2').val());
         filterList("owner2", "owner1");
@@ -105,7 +106,7 @@ $(document).ready(function(){
         $("span#sowner").text($('#owner2 option:selected').text());
     });
 
-    //Filter list of owners
+    // Filter list of owners
     function filterList(o1, o2) {
         $("#" + o2 + " > option").each(function() {
              $(this).show();
@@ -115,7 +116,7 @@ $(document).ready(function(){
         });
     }
 
-    //Filter list of players depending on owner selected
+    // Filter list of players depending on owner selected
     function filterPlayers(ownerid, which){
         $("#" + which + " > option").each(function() {
              $(this).show();
@@ -123,11 +124,22 @@ $(document).ready(function(){
                   $(this).hide();
                 }
         });
-
     }
 
-
-
+    // Move value to other one
+    function capSwap(){
+        var temp = 0;
+        if($("#caprec1").is(":hidden")) {
+            temp = $("#caprec2").val();
+            $("#caprec1").val(temp);
+            $("#caprec2").val(0)
+        }
+        else{
+            temp = $("#caprec1").val();
+            $("#caprec2").val(temp);
+            $("#caprec1").val(0)
+        }
+    }
 
 </script>
 {% endblock scripts %}
