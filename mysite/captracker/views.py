@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+
+from django.urls import reverse
 
 from liga.models import Owner
 from liga.models import Trade
@@ -122,3 +124,10 @@ def parse_full_trade(trade_items):
     full_trade.append(dict2)
     return full_trade
 
+##########
+#                FORM: Add Trade
+##########
+def submit(request):
+    kept_list = request.POST.getlist('o2_cap')
+    print(kept_list)
+    return HttpResponseRedirect(reverse('captracker:captracker'))
