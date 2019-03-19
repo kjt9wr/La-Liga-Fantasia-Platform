@@ -22,7 +22,7 @@
             <div>
                 Player:
                 <select id="player1">
-                    <option value=-99 name="none"> Select a Player to send</option>
+                    <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
                     <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
                         {{roster.athlete.name}}
@@ -47,7 +47,7 @@
             <div>
                 Player:
                 <select id="player2">
-                    <option value=-99 name="none"> Select a Player to send</option>
+                    <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
                     <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
                         {{roster.athlete.name}}
@@ -64,7 +64,7 @@
             <span id="cap1">Cap: <input type="number"> </span>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            <button id="switchCap">Swap</button>
+            <button class="glyphicon glyphicon-arrow-right" id="switchCap"></button>
         </div>
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             <span id="cap2" style="display:none">Cap: <input type="number"> </span>
@@ -85,15 +85,15 @@ $(document).ready(function(){
     $("button#switchCap").click(function(){
             $("#cap1").toggle();
             $("#cap2").toggle();
-            console.log('doe');
+            $("button#switchCap").toggleClass("glyphicon-arrow-right");
+            $("button#switchCap").toggleClass("glyphicon-arrow-left");
     })
-
 });
     //Changing owner 1
     $('#owner1').on('change', function(){
        console.log($('#owner1').val());
         filterList("owner1", "owner2");
-        filterPlayers($('#owner1').val(), "player1");
+        filterPlayers($('#owner1').val(), "player2");
         $("span#fowner").text($('#owner1 option:selected').text());
     });
 
@@ -101,7 +101,7 @@ $(document).ready(function(){
     $('#owner2').on('change', function(){
        console.log($('#owner2').val());
         filterList("owner2", "owner1");
-        filterPlayers($('#owner2').val(), "player2");
+        filterPlayers($('#owner2').val(), "player1");
         $("span#sowner").text($('#owner2 option:selected').text());
     });
 
