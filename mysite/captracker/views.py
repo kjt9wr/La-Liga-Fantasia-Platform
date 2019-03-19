@@ -50,8 +50,12 @@ def viewTrade(request, tid):
 ##########
 def addTrade(request):
     owner_list = Owner.objects.all()
+    all_players = Player.objects.exclude(name__contains='Franchise').order_by('name')
+    rosters_list = Roster.objects.all()
     context = {
         'owner_list': owner_list,
+        'all_players': all_players,
+        'rosters_list' : rosters_list,
     }
     return render(request, 'captracker/addTrade.html', context)
 
