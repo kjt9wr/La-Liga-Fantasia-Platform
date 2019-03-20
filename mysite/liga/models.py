@@ -35,4 +35,4 @@ class Trade(models.Model):
     cap = models.IntegerField(blank=True, null= True)
 
     def __str__(self):
-        return self.giver.name + " gives " + self.athlete.name + " and $" + str(self.cap) + " to " + self.recipient.name
+        return "Trade " + str(self.tradeID) + ": " + self.giver.name + " gives " + self.athlete.name + " and $" + str(self.cap) + " to " + self.recipient.name
