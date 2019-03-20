@@ -56,7 +56,6 @@ def addTrade(request):
     rosters_list = Roster.objects.all()
     context = {
         'owner_list': owner_list,
-        'all_players': all_players,
         'rosters_list' : rosters_list,
     }
     return render(request, 'captracker/addTrade.html', context)
@@ -124,10 +123,44 @@ def parse_full_trade(trade_items):
     full_trade.append(dict2)
     return full_trade
 
+
 ##########
 #                FORM: Add Trade
 ##########
+
 def submit(request):
-    kept_list = request.POST.getlist('o2_cap')
-    print(kept_list)
+    trade = Trade.objects.all().order_by('-tradeID')
+    new_tradeID = trade[0].tradeID + 1
+
+    fcap = getInt(request, 'o1_cap')
+    second = fcap == 0
+    owner2 = Owner.objects.get(pk=request.POST.get('owner2'))
+    owner1 = Owner.objects.get(pk=request.POST.get('owner1'))
+    player_to_o1 = Player.objects.get(pk=request.POST.get('player1'))
+    player_to_o2 = Player.objects.get(pk=request.POST.get('player2'))
+    cap_rec = fcap
+    # give_cap = True
+    if second:
+        cap_rec = getInt(request, 'o2_cap')
+        t1 = Trade(tradeID=new_tradeID, recipient=owner2, giver=owner1, athlete=player_to_o2)
+        t2 = Trade(tradeID=new_tradeID, recipient=owner1, giver=owner2, athlete=player_to_o1)
+    else:
+        t2 = Trade(tradeID=new_tradeID, recipient=owner2, giver=owner1, athlete=player_to_o2)
+        t1 = Trade(tradeID=new_tradeID, recipient=owner1, giver=owner2, athlete=player_to_o1)
+    t1.cap = cap_rec
+    t1.save()
+    t2.save()
+
     return HttpResponseRedirect(reverse('captracker:captracker'))
+
+
+##########
+#                Returns string as int
+##########
+def getInt(request, which):
+    num = request.POST.get(which)
+    if num == '':
+        mynum = 0
+    else:
+        mynum = int(num)
+    return mynum
