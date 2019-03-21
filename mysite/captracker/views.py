@@ -136,20 +136,30 @@ def submit(request):
     second = fcap == 0
     owner2 = Owner.objects.get(pk=request.POST.get('owner2'))
     owner1 = Owner.objects.get(pk=request.POST.get('owner1'))
-    player_to_o1 = Player.objects.get(pk=request.POST.get('player1'))
-    player_to_o2 = Player.objects.get(pk=request.POST.get('player2'))
+
+    # Dict of key: id
+    players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
+    players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
+
+    # Array of Players
+    o1_players = []
+    for (k,v) in players_to_o1.items():
+        o1_players.append(Player.objects.get(pk=v))
+
+    o2_players = []
+    for (k,v) in players_to_o2.items():
+        o2_players.append(Player.objects.get(pk=v))
+
     cap_rec = fcap
-    # give_cap = True
+
+    include_cap = True
     if second:
         cap_rec = getInt(request, 'o2_cap')
-        t1 = Trade(tradeID=new_tradeID, recipient=owner2, giver=owner1, athlete=player_to_o2)
-        t2 = Trade(tradeID=new_tradeID, recipient=owner1, giver=owner2, athlete=player_to_o1)
+        create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
+        create_trade_elements(new_tradeID, owner1, owner2, o1_players, 0, False)
     else:
-        t2 = Trade(tradeID=new_tradeID, recipient=owner2, giver=owner1, athlete=player_to_o2)
-        t1 = Trade(tradeID=new_tradeID, recipient=owner1, giver=owner2, athlete=player_to_o1)
-    t1.cap = cap_rec
-    t1.save()
-    t2.save()
+        create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec, True)
+        create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
 
     return HttpResponseRedirect(reverse('captracker:captracker'))
 
@@ -164,3 +174,11 @@ def getInt(request, which):
     else:
         mynum = int(num)
     return mynum
+
+def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
+    for player in player_list:
+        t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)
+        if include_cap:
+            t.cap = cap
+            include_cap = False
+        t.save()

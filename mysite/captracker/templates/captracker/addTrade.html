@@ -22,7 +22,7 @@
             <br>
             <div>
                 Player:
-                <select id="player1" name="player1">
+                <select id="player1" name="o1_p1">
                     <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
                     <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
@@ -47,7 +47,15 @@
             <Br>
             <div>
                 Player:
-                <select id="player2" name="player2">
+                <select id="player2" name="o2_p1">
+                    <option value=-99 name="none"> Select a Player</option>
+                    {% for roster in rosters_list %}
+                    <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
+                        {{roster.athlete.name}}
+                    </option>
+                    {% endfor %}
+                </select><br>
+                <select id="player" name="o2_p2">
                     <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
                     <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
