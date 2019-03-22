@@ -152,7 +152,6 @@ def submit(request):
 
     cap_rec = fcap
 
-    include_cap = True
     if second:
         cap_rec = getInt(request, 'o2_cap')
         create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
@@ -175,6 +174,10 @@ def getInt(request, which):
         mynum = int(num)
     return mynum
 
+
+##########
+#                Creates and saves a single entry in Trade table
+##########
 def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
     for player in player_list:
         t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)

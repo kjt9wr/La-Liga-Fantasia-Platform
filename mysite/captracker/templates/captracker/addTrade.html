@@ -20,7 +20,8 @@
                 </select> <br>
             </div>
             <br>
-            <div>
+
+            <div id="players_div1">
                 Player:
                 <select id="player1" name="o1_p1">
                     <option value=-99 name="none"> Select a Player</option>
@@ -30,10 +31,17 @@
                     </option>
                     {% endfor %}
                 </select>
+
             </div>
+            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer()">
+                <span class="glyphicon glyphicon-plus"></span> Add Player
+            </button>
+
         </div>
+
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         <!-- Owner 2 -->
+
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             <div>
                 Owner 2:
@@ -101,6 +109,8 @@ $(document).ready(function(){
             $("span#switchCap").toggleClass("glyphicon-arrow-right");
             $("span#switchCap").toggleClass("glyphicon-arrow-left");
     })
+
+
 });
     // Changing owner 1
     $('#owner1').on('change', function(){
@@ -151,6 +161,38 @@ $(document).ready(function(){
             $("#caprec2").val(temp);
             $("#caprec1").val(0)
         }
+    }
+
+    var player = 1
+
+    function addPlayer() {
+
+    //Create and append select list
+    var selectPlayerList = document.createElement("select");
+    selectPlayerList.id = "o1_p" + player;
+    player++;
+    var txt1 = "<br> <br> Player: ";
+    $("#players_div1").append(txt1, selectPlayerList);
+    console.log("player" + player);
+
+    populate_option(selectPlayerList, -99, "none", "Select a Player");
+
+
+    //for (var i = 0; i < array.length; i++) {
+     //   var option = document.createElement("option");
+     //   option.value = array[i];
+     //   option.text = array[i];
+     //   selectList.appendChild(option);
+   // }
+
+    }
+
+    function populate_option(list, val, nme, txt){
+        var option = document.createElement("option");
+        option.value = val;
+        option.name = nme;
+        option.text = txt;
+        list.appendChild(option);
     }
 
 </script>
