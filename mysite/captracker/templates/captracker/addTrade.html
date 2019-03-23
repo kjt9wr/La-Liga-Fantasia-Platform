@@ -15,7 +15,7 @@
                 <select id="owner1" name="owner1">
                     <option value=-99 name="none"> Select an Owner</option>
                     {% for owner in owner_list %}
-                    <option value={{owner.pk}} name={{owner.name}}> {{owner.name}}</option>
+                    <option value={{owner.pk}} name={{owner.name}} class="owner1_rec_player"> {{owner.name}}</option>
                     {% endfor %}
                 </select> <br>
             </div>
@@ -23,7 +23,7 @@
 
             <div id="players_div1">
                 Player:
-                <select id="player1" name="o1_p1">
+                <select class ="owner1_recs" id="player1" name="o1_p1">
                     <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
                     <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
@@ -33,7 +33,7 @@
                 </select>
 
             </div>
-            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer()">
+            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('owner1_recs')">
                 <span class="glyphicon glyphicon-plus"></span> Add Player
             </button>
 
@@ -53,7 +53,7 @@
                 </select>
             </div>
             <Br>
-            <div>
+            <div id="players_div2">
                 Player:
                 <select id="player2" name="o2_p1">
                     <option value=-99 name="none"> Select a Player</option>
@@ -102,6 +102,8 @@
 <script>
 
 $(document).ready(function(){
+
+    //Click on swap button, moves cap receiver to opposite owner
     $("span#switchCap").click(function(){
             capSwap();
             $("#cap1").toggle();
@@ -112,19 +114,18 @@ $(document).ready(function(){
 
 
 });
+
     // Changing owner 1
     $('#owner1').on('change', function(){
-       console.log($('#owner1').val());
         filterList("owner1", "owner2");
-        filterPlayers($('#owner1').val(), "player2");
+        filterPlayers($('#owner1').val(), "players_div2");
         $("span#fowner").text($('#owner1 option:selected').text());
     });
 
     // Changing owner 2
     $('#owner2').on('change', function(){
-       console.log($('#owner2').val());
         filterList("owner2", "owner1");
-        filterPlayers($('#owner2').val(), "player1");
+        filterPlayers($('#owner2').val(), "players_div1");
         $("span#sowner").text($('#owner2 option:selected').text());
     });
 
@@ -132,23 +133,26 @@ $(document).ready(function(){
     function filterList(o1, o2) {
         $("#" + o2 + " > option").each(function() {
              $(this).show();
-                if( $('#' + o1).val() == $(this).val()){
-                  $(this).hide();
-                }
+             if( $('#' + o1).val() == $(this).val()){
+                $(this).hide();
+             }
         });
     }
 
     // Filter list of players depending on owner selected
     function filterPlayers(ownerid, which){
-        $("#" + which + " > option").each(function() {
+
+        $('#' + which + ' select option').each(function() {
+                console.log(which);
              $(this).show();
-                if($(this).attr('class') != ownerid.toString()){
-                  $(this).hide();
-                }
+             if($(this).attr('class') != ownerid.toString()){
+                 $(this).hide();
+
+             }
         });
     }
 
-    // Move value to other one
+    // Transfer value typed from one to the other one
     function capSwap(){
         var temp = 0;
         if($("#caprec1").is(":hidden")) {
@@ -165,41 +169,43 @@ $(document).ready(function(){
 
     var player = 1
 
-    function addPlayer() {
+    function addPlayer(who) {
 
         //Create and append select list
         var selectPlayerList = document.createElement("select");
         selectPlayerList.id = "o1_p" + player;
-        player++;
+
         var txt1 = "<br> <br> Player: ";
         $("#players_div1").append(txt1, selectPlayerList);
-        console.log("player" + player);
 
         populate_option(selectPlayerList, -99, "none", "Select a Player");
 
+        //Populate with all players
         {% for roster in rosters_list %}
            var val = {{roster.athlete.pk}};
            var name = "{{roster.athlete.name}}";
            var txt = "{{roster.athlete.name}}";
-           populate_option(selectPlayerList, val, name, txt);
-
+           oid = "{{roster.owner.pk}}";
+           populate_option(selectPlayerList, val, name, txt, oid);
         {% endfor %}
 
-        //for (var i = 0; i < array.length; i++) {
-         //   var option = document.createElement("option");
-         //   option.value = array[i];
-         //   option.text = array[i];
-         //   selectList.appendChild(option);
-       // }
-
+        player++;
     }
 
-    function populate_option(list, val, nme, txt){
+
+    function populate_option(list, val, nme, txt, oid){
         var option = document.createElement("option");
         option.value = val;
+        option.id = player + "-" + val;
         option.name = nme;
         option.text = txt;
+
         list.appendChild(option);
+        if(oid){
+            console.log(oid);
+            $("option#" + player + "-" + val).addClass(oid);
+        }
+
     }
 
 </script>
