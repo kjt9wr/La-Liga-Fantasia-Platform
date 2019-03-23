@@ -22,18 +22,9 @@
             <br>
 
             <div id="players_div1">
-                <!--Player:
-                <select class ="owner1_recs" id="player1" name="o1_p1">
-                    <option value=-99 name="none"> Select a Player</option>
-                    {% for roster in rosters_list %}
-                    <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
-                        {{roster.athlete.name}}
-                    </option>
-                    {% endfor %}
-                </select>
--->
+                <!-- Dynamically Populated Player Select Fields -->
             </div>
-            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('owner1_recs')">
+            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o1_p', 'players_div1')">
                 <span class="glyphicon glyphicon-plus"></span> Add Player
             </button>
 
@@ -54,24 +45,11 @@
             </div>
             <Br>
             <div id="players_div2">
-                Player:
-                <select id="player2" name="o2_p1">
-                    <option value=-99 name="none"> Select a Player</option>
-                    {% for roster in rosters_list %}
-                    <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
-                        {{roster.athlete.name}}
-                    </option>
-                    {% endfor %}
-                </select><br>
-                <select id="player" name="o2_p2">
-                    <option value=-99 name="none"> Select a Player</option>
-                    {% for roster in rosters_list %}
-                    <option value={{roster.athlete.pk}} name={{roster.athlete.name}} class="{{roster.owner.pk}}">
-                        {{roster.athlete.name}}
-                    </option>
-                    {% endfor %}
-                </select>
+               <!-- Dynamically Populated Player Select Fields -->
             </div>
+            <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o2_p', 'players_div2')">
+                <span class="glyphicon glyphicon-plus"></span> Add Player
+            </button>
         </div>
     </div>
 
@@ -103,7 +81,7 @@
 
 $(document).ready(function(){
 
-    //Click on swap button, moves cap receiver to opposite owner
+    // Click on swap button, moves cap form element to opposite owner
     $("span#switchCap").click(function(){
             capSwap();
             $("#cap1").toggle();
@@ -112,24 +90,23 @@ $(document).ready(function(){
             $("span#switchCap").toggleClass("glyphicon-arrow-left");
     })
 
-
 });
 
-    // Changing owner 1
+    // Changing owner 1 - filtering list of owner2, filtering players owner2 can receive
     $('#owner1').on('change', function(){
         filterList("owner1", "owner2");
         filterPlayers($('#owner1').val(), "players_div2");
         $("span#fowner").text($('#owner1 option:selected').text());
     });
 
-    // Changing owner 2
+    // Changing owner 2 - filtering list of owner1, filtering players owner1 can receive
     $('#owner2').on('change', function(){
         filterList("owner2", "owner1");
         filterPlayers($('#owner2').val(), "players_div1");
         $("span#sowner").text($('#owner2 option:selected').text());
     });
 
-    // Filter list of owners
+    // Filter list of owners based on other owner selected
     function filterList(o1, o2) {
         $("#" + o2 + " > option").each(function() {
              $(this).show();
@@ -139,10 +116,9 @@ $(document).ready(function(){
         });
     }
 
-    // Filter list of players depending on owner selected
+    // Filter list of players depending on other owner selected
     function filterPlayers(ownerid, which){
         $('#' + which + ' select option').each(function() {
-                console.log(which);
              $(this).show();
              if($(this).attr('class') != ownerid.toString()){
                  $(this).hide();
@@ -166,17 +142,19 @@ $(document).ready(function(){
         }
     }
 
+    // local variable to count field ids
     var player = 1
 
-    function addPlayer(who) {
+    // Dynamically create and populate a select form element
+    function addPlayer(who, which) {
 
         //Create and append select list
         var selectPlayerList = document.createElement("select");
-        selectPlayerList.id = "o1_p" + player;
-        selectPlayerList.name = "o1_p" + player;
+        selectPlayerList.id = who + player;
+        selectPlayerList.name = who + player;
 
         var txt1 = "<br> <br> Player: ";
-        $("#players_div1").append(txt1, selectPlayerList);
+        $("#" + which).append(txt1, selectPlayerList);
 
         populate_option(selectPlayerList, -99, "none", "Select a Player");
 
@@ -189,7 +167,13 @@ $(document).ready(function(){
            populate_option(selectPlayerList, val, name, txt, oid);
         {% endfor %}
 
-        filterPlayers($('#owner2').val(), "players_div1");
+        if (who == 'o1_p'){
+            owner = 'owner2';
+        }
+        else{
+            owner = 'owner1';
+        }
+        filterPlayers($('#' + owner).val(), which);
         player++;
 
     }
@@ -204,7 +188,6 @@ $(document).ready(function(){
 
         list.appendChild(option);
         if(oid){
-            console.log(oid);
             $("option#" + player + "-" + val).addClass(oid);
         }
 

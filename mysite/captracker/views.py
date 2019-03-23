@@ -52,7 +52,6 @@ def viewTrade(request, tid):
 ##########
 def addTrade(request):
     owner_list = Owner.objects.all()
-    all_players = Player.objects.exclude(name__contains='Franchise').order_by('name')
     rosters_list = Roster.objects.all()
     context = {
         'owner_list': owner_list,
@@ -133,16 +132,17 @@ def submit(request):
     new_tradeID = trade[0].tradeID + 1
 
     fcap = getInt(request, 'o1_cap')
+
+    # boolean if owner2 receives cap (or no cap)
     second = fcap == 0
     owner2 = Owner.objects.get(pk=request.POST.get('owner2'))
     owner1 = Owner.objects.get(pk=request.POST.get('owner1'))
 
-    # Dict of key: id
+    # Create dict of players received { key: id }
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
-    print(players_to_o1)
-    print(players_to_o2)
-    # Array of Players
+
+    # Reformat to Array of Players
     o1_players = []
     for (k,v) in players_to_o1.items():
         o1_players.append(Player.objects.get(pk=v))
@@ -153,6 +153,7 @@ def submit(request):
 
     cap_rec = fcap
 
+    # If owner 2 receives cap
     if second:
         cap_rec = getInt(request, 'o2_cap')
         create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
