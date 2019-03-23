@@ -167,23 +167,30 @@ $(document).ready(function(){
 
     function addPlayer() {
 
-    //Create and append select list
-    var selectPlayerList = document.createElement("select");
-    selectPlayerList.id = "o1_p" + player;
-    player++;
-    var txt1 = "<br> <br> Player: ";
-    $("#players_div1").append(txt1, selectPlayerList);
-    console.log("player" + player);
+        //Create and append select list
+        var selectPlayerList = document.createElement("select");
+        selectPlayerList.id = "o1_p" + player;
+        player++;
+        var txt1 = "<br> <br> Player: ";
+        $("#players_div1").append(txt1, selectPlayerList);
+        console.log("player" + player);
 
-    populate_option(selectPlayerList, -99, "none", "Select a Player");
+        populate_option(selectPlayerList, -99, "none", "Select a Player");
 
+        {% for roster in rosters_list %}
+           var val = {{roster.athlete.pk}};
+           var name = "{{roster.athlete.name}}";
+           var txt = "{{roster.athlete.name}}";
+           populate_option(selectPlayerList, val, name, txt);
 
-    //for (var i = 0; i < array.length; i++) {
-     //   var option = document.createElement("option");
-     //   option.value = array[i];
-     //   option.text = array[i];
-     //   selectList.appendChild(option);
-   // }
+        {% endfor %}
+
+        //for (var i = 0; i < array.length; i++) {
+         //   var option = document.createElement("option");
+         //   option.value = array[i];
+         //   option.text = array[i];
+         //   selectList.appendChild(option);
+       // }
 
     }
 
