@@ -22,7 +22,7 @@
             <br>
 
             <div id="players_div1">
-                Player:
+                <!--Player:
                 <select class ="owner1_recs" id="player1" name="o1_p1">
                     <option value=-99 name="none"> Select a Player</option>
                     {% for roster in rosters_list %}
@@ -31,7 +31,7 @@
                     </option>
                     {% endfor %}
                 </select>
-
+-->
             </div>
             <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('owner1_recs')">
                 <span class="glyphicon glyphicon-plus"></span> Add Player
@@ -173,6 +173,7 @@ $(document).ready(function(){
         //Create and append select list
         var selectPlayerList = document.createElement("select");
         selectPlayerList.id = "o1_p" + player;
+        selectPlayerList.name = "o1_p" + player;
 
         var txt1 = "<br> <br> Player: ";
         $("#players_div1").append(txt1, selectPlayerList);

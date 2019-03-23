@@ -140,7 +140,8 @@ def submit(request):
     # Dict of key: id
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
-
+    print(players_to_o1)
+    print(players_to_o2)
     # Array of Players
     o1_players = []
     for (k,v) in players_to_o1.items():
