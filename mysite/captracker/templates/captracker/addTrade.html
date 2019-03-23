@@ -141,7 +141,6 @@ $(document).ready(function(){
 
     // Filter list of players depending on owner selected
     function filterPlayers(ownerid, which){
-
         $('#' + which + ' select option').each(function() {
                 console.log(which);
              $(this).show();
@@ -189,7 +188,9 @@ $(document).ready(function(){
            populate_option(selectPlayerList, val, name, txt, oid);
         {% endfor %}
 
+        filterPlayers($('#owner2').val(), "players_div1");
         player++;
+
     }
 
 
