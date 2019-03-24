@@ -12,18 +12,17 @@
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             <div>
                 Owner 1:
-                <select id="owner1" name="owner1">
+                <select class='ownersel' id="owner1" name="owner1">
                     <option value=-99 name="none"> Select an Owner</option>
                     {% for owner in owner_list %}
                     <option value={{owner.pk}} name={{owner.name}} class="owner1_rec_player"> {{owner.name}}</option>
                     {% endfor %}
                 </select> <br>
             </div>
-            <br>
 
             <div id="players_div1">
                 <!-- Dynamically Populated Player Select Fields -->
-            </div>
+            </div><br>
             <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o1_p', 'players_div1')">
                 <span class="glyphicon glyphicon-plus"></span> Add Player
             </button>
@@ -36,17 +35,16 @@
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             <div>
                 Owner 2:
-                <select id="owner2" name="owner2">
+                <select class='ownersel' id="owner2" name="owner2">
                     <option value=-99 name="none"> Select an Owner</option>
                     {% for owner in owner_list %}
                     <option value={{owner.pk}}> {{owner.name}}</option>
                     {% endfor %}
                 </select>
             </div>
-            <Br>
             <div id="players_div2">
                <!-- Dynamically Populated Player Select Fields -->
-            </div>
+            </div><br>
             <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o2_p', 'players_div2')">
                 <span class="glyphicon glyphicon-plus"></span> Add Player
             </button>
@@ -60,14 +58,14 @@
             <span id="cap1">Cap: <input type="number" name="o1_cap" id="caprec1"> </span>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            <span class="glyphicon glyphicon-arrow-right" id="switchCap"></span>
+            <center> <span class="glyphicon glyphicon-arrow-right" id="switchCap"></span></center>
         </div>
         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
             <span id="cap2" style="display:none">Cap: <input type="number" name="o2_cap" id="caprec2"> </span>
         </div>
 
     </div>
-        <input type="submit" value="Submit">
+        <center> <input style="display:none" id="submit_form" type="submit" value="Submit"> </center>
     </form>
 </div>
 {% endblock form_content %}
@@ -97,6 +95,7 @@ $(document).ready(function(){
         filterList("owner1", "owner2");
         filterPlayers($('#owner1').val(), "players_div2");
         $("span#fowner").text($('#owner1 option:selected').text());
+        showSubmit();
     });
 
     // Changing owner 2 - filtering list of owner1, filtering players owner1 can receive
@@ -104,6 +103,7 @@ $(document).ready(function(){
         filterList("owner2", "owner1");
         filterPlayers($('#owner2').val(), "players_div1");
         $("span#sowner").text($('#owner2 option:selected').text());
+        showSubmit();
     });
 
     // Filter list of owners based on other owner selected
@@ -192,6 +192,16 @@ $(document).ready(function(){
         }
 
     }
+
+
+     function showSubmit(){
+         if($('#owner1').val() < 0 || $('#owner2').val() < 0){
+            $('#submit_form').hide();
+         }
+         else{
+            $('#submit_form').show();
+         }
+     }
 
 </script>
 {% endblock scripts %}

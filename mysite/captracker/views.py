@@ -30,6 +30,7 @@ def captracker(request):
     }
     return render(request, 'captracker/captracker.html', context)
 
+
 ##########
 # #              Render View Trade Page
 ##########
