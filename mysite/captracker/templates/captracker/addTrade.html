@@ -1,0 +1,223 @@
+{% extends "./trade_base.html" %}
+
+{% block Title %} Add Trade{% endblock Title %}
+
+{% block form_content %}
+
+<div>
+    <form action="{% url 'captracker:submit' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <!-- Owner 1 -->
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div>
+                    Owner 1:
+                    <select class='ownersel' id="owner1" name="owner1">
+                        <option value=-99 name="none"> Select an Owner</option>
+                        {% for owner in owner_list %}
+                        <option value={{owner.pk}} name={{owner.name}} class="owner1_rec_player"> {{owner.name}}
+                        </option>
+                        {% endfor %}
+                    </select> <br>
+                </div>
+
+                <div id="players_div1">
+                    <!-- Dynamically Populated Player Select Fields -->
+                </div>
+                <br>
+                <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o1_p', 'players_div1')">
+                    <span class="glyphicon glyphicon-plus"></span> Add Player
+                </button>
+
+            </div>
+
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+            <!-- Owner 2 -->
+
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div>
+                    Owner 2:
+                    <select class='ownersel' id="owner2" name="owner2">
+                        <option value=-99 name="none"> Select an Owner</option>
+                        {% for owner in owner_list %}
+                        <option value={{owner.pk}}> {{owner.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="players_div2">
+                    <!-- Dynamically Populated Player Select Fields -->
+                </div>
+                <br>
+                <button type="button" class="btn btn-default btn-sm" onclick="addPlayer('o2_p', 'players_div2')">
+                    <span class="glyphicon glyphicon-plus"></span> Add Player
+                </button>
+            </div>
+        </div>
+
+        <br>
+        <!--    Cap     -->
+        <div class="row">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <span id="cap1">Cap: <input type="number" name="o1_cap" id="caprec1"> </span>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <center><span class="glyphicon glyphicon-arrow-right" id="switchCap"></span></center>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <span id="cap2" style="display:none">Cap: <input type="number" name="o2_cap" id="caprec2"> </span>
+            </div>
+
+        </div>
+        <center><input style="display:none" id="submit_form" type="submit" value="Submit"></center>
+    </form>
+</div>
+{% endblock form_content %}
+
+{% block owner1 %}<span id="fowner">Owner 1</span> {% endblock owner1 %}
+{% block owner2 %} <span id="sowner">Owner 2</span> {% endblock owner2 %}
+
+
+{% block scripts %}
+<script>
+
+$(document).ready(function(){
+
+    // Click on swap button, moves cap form element to opposite owner
+    $("span#switchCap").click(function(){
+            capSwap();
+            $("#cap1").toggle();
+            $("#cap2").toggle();
+            $("span#switchCap").toggleClass("glyphicon-arrow-right");
+            $("span#switchCap").toggleClass("glyphicon-arrow-left");
+    })
+
+});
+
+    // Changing owner 1 - filtering list of owner2, filtering players owner2 can receive
+    $('#owner1').on('change', function(){
+        filterList("owner1", "owner2");
+        filterPlayers($('#owner1').val(), "players_div2");
+        $("span#fowner").text($('#owner1 option:selected').text());
+        showSubmit();
+    });
+
+    // Changing owner 2 - filtering list of owner1, filtering players owner1 can receive
+    $('#owner2').on('change', function(){
+        filterList("owner2", "owner1");
+        filterPlayers($('#owner2').val(), "players_div1");
+        $("span#sowner").text($('#owner2 option:selected').text());
+        showSubmit();
+    });
+
+    // Filter list of owners based on other owner selected
+    function filterList(o1, o2) {
+        $("#" + o2 + " > option").each(function() {
+             $(this).show();
+             if( $('#' + o1).val() == $(this).val()){
+                $(this).hide();
+             }
+        });
+    }
+
+    // Filter list of players depending on other owner selected
+    function filterPlayers(ownerid, which){
+        $('#' + which + ' select option').each(function() {
+             $(this).show();
+             if($(this).attr('class') != ownerid.toString()){
+                 $(this).hide();
+
+             }
+        });
+    }
+
+    // Transfer value typed from one to the other one
+    function capSwap(){
+        var temp = 0;
+        if($("#caprec1").is(":hidden")) {
+            temp = $("#caprec2").val();
+            $("#caprec1").val(temp);
+            $("#caprec2").val(0)
+        }
+        else{
+            temp = $("#caprec1").val();
+            $("#caprec2").val(temp);
+            $("#caprec1").val(0)
+        }
+    }
+
+    // local variable to count field ids
+    var player = 1
+
+    // Dynamically create and populate a select form element
+    function addPlayer(who, which) {
+
+        //Create and append select list
+        var selectPlayerList = document.createElement("select");
+        selectPlayerList.id = who + player;
+        selectPlayerList.name = who + player;
+
+        var outerdiv = "<div id=" + player + "> </div"
+        $("#" + which).append(outerdiv);
+
+        var txt1 = "<span> <br> Player: ";
+        var txt2 = "<button type='button' class='btn btn-default btn-sm' onclick='remove_div(" + player + ")' > <span class='glyphicon glyphicon-trash'></span> </button> </span>"
+        $("div#" + player).append(txt1, selectPlayerList, txt2);
+
+        populate_option(selectPlayerList, -99, "none", "Select a Player");
+
+        //Populate with all players
+        {% for roster in rosters_list %}
+           var val = {{roster.athlete.pk}};
+           var name = "{{roster.athlete.name}}";
+           var txt = "{{roster.athlete.name}}";
+           oid = "{{roster.owner.pk}}";
+           populate_option(selectPlayerList, val, name, txt, oid);
+        {% endfor %}
+
+        if (who == 'o1_p'){
+            owner = 'owner2';
+        }
+        else{
+            owner = 'owner1';
+        }
+        filterPlayers($('#' + owner).val(), which);
+        player++;
+    }
+
+
+    // Remove div containing "player: [Select] (trash)"
+    function remove_div(id){
+        console.log(id);
+        $("div#" + id).remove();
+    }
+
+    // Append Player to select
+    function populate_option(list, val, nme, txt, oid){
+        var option = document.createElement("option");
+        option.value = val;
+        option.id = player + "-" + val;
+        option.name = nme;
+        option.text = txt;
+
+        list.appendChild(option);
+        if(oid){
+            $("option#" + player + "-" + val).addClass(oid);
+        }
+    }
+
+    // Decide if form is valid to display submit button
+    function showSubmit(){
+         if($('#owner1').val() < 0 || $('#owner2').val() < 0){
+            $('#submit_form').hide();
+         }
+         else{
+            $('#submit_form').show();
+         }
+    }
+
+
+
+</script>
+{% endblock scripts %}
+
+

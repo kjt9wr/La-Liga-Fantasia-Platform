@@ -7,15 +7,48 @@
 <body>
 {% include "liga/navbar.html" %}
 
-{% if owner_list %}
-    <ul>
-    {% for owner in owner_list %}
-        <li>{{owner.name}} - {{owner.cap}} </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No Owners are available.</p>
-{% endif %}
+<div class="container">
+
+    <table class="table .table-sm">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            {% for owner in owner_list %}
+            <th scope="col">{{owner.name}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Cap -->
+        <tr>
+            <td><b>Cap Space</b></td>
+            {% for owner in owner_list %}
+            <td> {{owner.cap}}</td>
+            {% endfor %}
+        </tr>
+        <!-- Trades -->
+        {% for trade in cap_exchange %}
+        <tr>
+            <td><a href="{% url 'captracker:viewTrade' trade.0 %}"> Trade {{trade.0}} </a></td>
+            {% for owner in owner_list %}
+            <td>
+                {% if trade.1.owner == owner %}
+                {{ trade.1.cap_rec }}
+                {% elif trade.2.owner == owner %}
+                {{ trade.2.cap_rec }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <a href="{% url 'captracker:addTrade' %}" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-plus"></span> Add Trade
+    </a>
+</div>
 
 
 {% include "liga/jquery_include.html" %}

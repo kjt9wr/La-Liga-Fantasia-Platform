@@ -1,0 +1,10 @@
+Kevin             Michael
+5                   -5
+Mixon
+
+
+[{},{}]
+{   oid: num
+    cap rec: num
+    players rec: [pid1,pid2...]
+   }

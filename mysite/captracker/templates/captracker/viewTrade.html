@@ -1,0 +1,39 @@
+{% extends "./trade_base.html" %}
+
+{% block Title %} View Trade{% endblock Title %}
+
+
+{% block owner1 %} {{trade.0.owner}} {% endblock owner1 %}
+
+{% block table1_body %}
+<!-- Cap -->
+<tr>
+    {%if trade.0.cap_rec > 0 %}
+    <td>$ {{trade.0.cap_rec}}</td>
+    {% endif %}
+</tr>
+<!-- Players -->
+{%for i in trade.0.players_received %}
+<tr>
+    <td>{{ i.name }}</td>
+</tr>
+{% endfor %}
+{% endblock table1_body %}
+
+{% block owner2 %} {{trade.1.owner}} {% endblock owner2 %}
+
+
+{% block table2_body %}
+<!-- Cap -->
+<tr>
+    {%if trade.1.cap_rec > 0 %}
+    <td> $ {{trade.1.cap_rec}}</td>
+    {% endif %}
+</tr>
+<!-- Players -->
+{%for i in trade.1.players_received %}
+<tr>
+    <td>{{ i.name }}</td>
+</tr>
+{% endfor %}
+{% endblock table2_body %}
