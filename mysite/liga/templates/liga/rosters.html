@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rosters</title>
+{% extends "./base.html" %}
+{% block Title %} {{owner_name}}'s Roster {% endblock Title %}
 
-{% include "liga/jquery_include.html" %}
-</head>
-<body>
-{% include "liga/navbar.html" %}
+
+{% block main_content %}
 <!--
     Main Table
 -->
@@ -73,7 +68,5 @@
     </form>
 
 </div>
-
-</body>
-</html>
+{% endblock main_content %}
 

@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
-</head>
-<body>
-{% include "liga/navbar.html" %}
-    Homepage fam <br>
+{% extends "./base.html" %}
+{% block Title %} Home Page {% endblock Title %}
 
-{% include "liga/jquery_include.html" %}
 
-</body>
-</html>
+{% block main_content %}
+<div class="container">
+    my index page
 
+</div>
+
+{% endblock main_content %}

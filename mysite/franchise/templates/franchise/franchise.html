@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Franchise</title>
-    {% include "liga/jquery_include.html" %}
-</head>
-<body>
-{% include "liga/navbar.html" %}
+{% extends "liga/base.html" %}
+{% block Title %} Franchise {% endblock Title %}
+
+
+{% block main_content %}
+
 
 <div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
             <div class="row">
@@ -144,9 +141,6 @@
                 </form>
                 <br>
             </div>
-
         </div>
 
-
-</body>
-</html>
+{% endblock main_content %}
