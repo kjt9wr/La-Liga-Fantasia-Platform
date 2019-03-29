@@ -175,7 +175,6 @@ def submit(request):
             # owner 2 gets
             create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
 
-    print('done');
     return HttpResponseRedirect(reverse('captracker:captracker'))
 
 
@@ -195,10 +194,13 @@ def getInt(request, which):
 #                Creates and saves a single entry in Trade table
 ##########
 def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
-    print('Create called');
     for player in player_list:
         t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)
         if include_cap:
             t.cap = cap
             include_cap = False
+            rec.cap += cap
+            giv.cap -= cap
+            rec.save()
+            giv.save()
         t.save()
