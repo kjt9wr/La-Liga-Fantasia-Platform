@@ -157,12 +157,25 @@ def submit(request):
     # If owner 2 receives cap
     if second:
         cap_rec = getInt(request, 'o2_cap')
-        create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
-        create_trade_elements(new_tradeID, owner1, owner2, o1_players, 0, False)
+        if len(o2_players) == 0:
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec * -1, True)
+        else:
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, 0, False)
     else:
-        create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec, True)
-        create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
+        if len(o1_players) == 0:
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec * -1, True)
+        else:
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec, True)
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
 
+    print('done');
     return HttpResponseRedirect(reverse('captracker:captracker'))
 
 
@@ -182,6 +195,7 @@ def getInt(request, which):
 #                Creates and saves a single entry in Trade table
 ##########
 def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
+    print('Create called');
     for player in player_list:
         t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)
         if include_cap:
