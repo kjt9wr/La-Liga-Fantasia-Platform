@@ -195,6 +195,7 @@ def getInt(request, which):
 ##########
 def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
     for player in player_list:
+        # update the trade
         t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)
         if include_cap:
             t.cap = cap
@@ -204,3 +205,8 @@ def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
             rec.save()
             giv.save()
         t.save()
+
+        # update the rosters
+        r = Roster.objects.get(athlete=player)
+        r.owner = rec
+        r.save()
