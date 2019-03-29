@@ -157,11 +157,23 @@ def submit(request):
     # If owner 2 receives cap
     if second:
         cap_rec = getInt(request, 'o2_cap')
-        create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
-        create_trade_elements(new_tradeID, owner1, owner2, o1_players, 0, False)
+        if len(o2_players) == 0:
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec * -1, True)
+        else:
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec, True)
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, 0, False)
     else:
-        create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec, True)
-        create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
+        if len(o1_players) == 0:
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, cap_rec * -1, True)
+        else:
+            # owner 1 gets
+            create_trade_elements(new_tradeID, owner1, owner2, o1_players, cap_rec, True)
+            # owner 2 gets
+            create_trade_elements(new_tradeID, owner2, owner1, o2_players, 0, False)
 
     return HttpResponseRedirect(reverse('captracker:captracker'))
 
@@ -183,8 +195,18 @@ def getInt(request, which):
 ##########
 def create_trade_elements(tID, rec, giv, player_list, cap, include_cap):
     for player in player_list:
+        # update the trade
         t = Trade(tradeID=tID, recipient=rec, giver=giv, athlete=player)
         if include_cap:
             t.cap = cap
             include_cap = False
+            rec.cap += cap
+            giv.cap -= cap
+            rec.save()
+            giv.save()
         t.save()
+
+        # update the rosters
+        r = Roster.objects.get(athlete=player)
+        r.owner = rec
+        r.save()
