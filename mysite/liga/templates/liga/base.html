@@ -5,6 +5,10 @@
     <title>{% block Title %}{% endblock Title %}</title>
 
     {% include "liga/jquery_include.html" %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'liga/style.css' %}">
 </head>
 
 <body>
