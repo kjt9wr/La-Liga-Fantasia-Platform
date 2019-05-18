@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
 
     <title>{% block Title %}{% endblock Title %}</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
+{% include "liga/jquery_include.html" %}
 {% load static %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'liga/style.css' %}">
+
 </head>
+
 <body>
 {% include "liga/navbar.html" %}
 
@@ -58,7 +58,6 @@
 </div>
 
 {% block scripts %} {% endblock scripts %}
-{% include "liga/jquery_include.html" %}
 </body>
 </html>
 </html>

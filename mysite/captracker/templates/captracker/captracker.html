@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cap Tracker</title>
-</head>
-<body>
-{% include "liga/navbar.html" %}
+{% extends "liga/base.html" %}
+{% block Title %} Cap Tracker {% endblock Title %}
 
+
+{% block main_content %}
 <div class="container table-responsive">
 
-    <table class="table .table-sm">
+    <table class="table .table-sm table-hover">
         <thead>
         <tr>
             <th scope="col"></th>
@@ -51,7 +47,4 @@
         <span class="glyphicon glyphicon-plus"></span> Add Trade
     </a> </center>
 
-{% include "liga/jquery_include.html" %}
-</body>
-</html>
-</html>
+{% endblock main_content %}
