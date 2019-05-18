@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 from liga.models import Owner
@@ -143,16 +143,29 @@ def submit(request):
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
 
+
     # Reformat to Array of Players
-    o1_players = []
-    for (k,v) in players_to_o1.items():
-        o1_players.append(Player.objects.get(pk=v))
+    try:
+        o1_players = []
+        for (k,v) in players_to_o1.items():
+            o1_players.append(Player.objects.get(pk=v))
 
-    o2_players = []
-    for (k,v) in players_to_o2.items():
-        o2_players.append(Player.objects.get(pk=v))
+        o2_players = []
+        for (k,v) in players_to_o2.items():
+            o2_players.append(Player.objects.get(pk=v))
 
-    cap_rec = fcap
+        cap_rec = fcap
+    except ObjectDoesNotExist:
+        owner_list = Owner.objects.all()
+        rosters_list = Roster.objects.all()
+        context = {
+            'owner_list': owner_list,
+            'rosters_list': rosters_list,
+            'error_message': "Invalid Player Selection"
+        }
+        return render(request, 'captracker/addTrade.html', context)
+
+
 
     # If owner 2 receives cap
     if second:

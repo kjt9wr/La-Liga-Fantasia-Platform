@@ -14,9 +14,10 @@
 <body>
 {% include "liga/navbar.html" %}
 
-
+{% block error_message %}{% endblock error_message %}
 <div class="container"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
     <!--    Back to Cap Tracker -->
+
     <a href="{% url 'captracker:captracker' %}" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-arrow-left"></span> Back to Cap Tracker
     </a>

@@ -2,9 +2,18 @@
 
 {% block Title %} Add Trade{% endblock Title %}
 
+{% block error_message %}
+    {% if error_message %}
+        <div class="error_message">
+            {{ error_message }}
+        </div>
+    {% endif %}
+{% endblock error_message %}
+
 {% block form_content %}
 
 <div>
+
     <form action="{% url 'captracker:submit' %}" method="post">
         {% csrf_token %}
         <div class="row">
