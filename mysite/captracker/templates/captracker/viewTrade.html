@@ -2,7 +2,6 @@
 
 {% block Title %} View Trade{% endblock Title %}
 
-
 {% block owner1 %} {{trade.0.owner}} {% endblock owner1 %}
 
 {% block table1_body %}
@@ -12,6 +11,7 @@
     <td>$ {{trade.0.cap_rec}}</td>
     {% endif %}
 </tr>
+
 <!-- Players -->
 {%for i in trade.0.players_received %}
 <tr>

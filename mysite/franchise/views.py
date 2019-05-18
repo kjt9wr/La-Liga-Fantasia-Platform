@@ -56,4 +56,4 @@ def get_list(position):
         return Player.objects.filter(position=position).exclude(name__contains='Franchise').order_by('-price')
     else:
         return Player.objects.filter(position=position).exclude(name__contains='Franchise').filter(
-            price__gte=20).order_by('-price')
+            price__gte=19).order_by('-price')

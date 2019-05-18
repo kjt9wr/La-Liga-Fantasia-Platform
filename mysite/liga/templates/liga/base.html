@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block Title %}{% endblock Title %}</title>
+
+    {% include "liga/jquery_include.html" %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'liga/style.css' %}">
+</head>
+
+<body>
+    {% include "liga/navbar.html" %}
+
+
+    {% block main_content %} {% endblock main_content %}
+
+    {% block scripts %} {% endblock scripts %}
+</body>
+</html>
