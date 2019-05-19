@@ -4,9 +4,7 @@
 
 {% block error_message %}
     {% if error_message %}
-        <div class="error_message">
-            {{ error_message }}
-        </div>
+        <div class="error_message">  {{ error_message }}  </div>
     {% endif %}
 {% endblock error_message %}
 
@@ -77,7 +75,8 @@
             </div>
 
         </div>
-        <center><input class="mybtn" style="display:none" id="submit_form" type="submit" value="Submit"></center>
+        <br>
+            <center><input class="mybtn" style="display:none" id="submit_form" type="submit" value="Submit"></center>
     </form>
 </div>
 {% endblock form_content %}

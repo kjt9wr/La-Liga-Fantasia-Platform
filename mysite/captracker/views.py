@@ -132,6 +132,7 @@ def submit(request):
     trade = Trade.objects.all().order_by('-tradeID')
     new_tradeID = trade[0].tradeID + 1
 
+    # Cap the first player receives
     fcap = getInt(request, 'o1_cap')
 
     # boolean if owner2 receives cap (or no cap)
@@ -143,18 +144,20 @@ def submit(request):
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
 
-
     # Reformat to Array of Players
     try:
+        if len(players_to_o1) + len(players_to_o2) == 0:
+            raise ObjectDoesNotExist('Must have a player')
         o1_players = []
-        for (k,v) in players_to_o1.items():
+        for (k, v) in players_to_o1.items():
             o1_players.append(Player.objects.get(pk=v))
 
         o2_players = []
-        for (k,v) in players_to_o2.items():
+        for (k, v) in players_to_o2.items():
             o2_players.append(Player.objects.get(pk=v))
 
         cap_rec = fcap
+
     except ObjectDoesNotExist:
         owner_list = Owner.objects.all()
         rosters_list = Roster.objects.all()
@@ -164,8 +167,6 @@ def submit(request):
             'error_message': "Invalid Player Selection"
         }
         return render(request, 'captracker/addTrade.html', context)
-
-
 
     # If owner 2 receives cap
     if second:
