@@ -140,9 +140,12 @@ def submit(request):
     owner2 = Owner.objects.get(pk=request.POST.get('owner2'))
     owner1 = Owner.objects.get(pk=request.POST.get('owner1'))
 
+
+
     # Create dict of players received { key: id }
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
+
 
     # Reformat to Array of Players
     try:
@@ -156,6 +159,8 @@ def submit(request):
         for (k, v) in players_to_o2.items():
             o2_players.append(Player.objects.get(pk=v))
 
+        if len(o1_players) != len(set(o1_players)) or len(o2_players) != len(set(o2_players)):
+            raise ObjectDoesNotExist('Duplicate player error')
         cap_rec = fcap
 
     except ObjectDoesNotExist:
