@@ -2,9 +2,16 @@
 
 {% block Title %} Add Trade{% endblock Title %}
 
+{% block error_message %}
+    {% if error_message %}
+        <div class="error_message">  {{ error_message }}  </div>
+    {% endif %}
+{% endblock error_message %}
+
 {% block form_content %}
 
 <div>
+
     <form action="{% url 'captracker:submit' %}" method="post">
         {% csrf_token %}
         <div class="row">
@@ -31,7 +38,7 @@
 
             </div>
 
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+            <div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"></div>
             <!-- Owner 2 -->
 
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
@@ -60,7 +67,7 @@
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                 <span id="cap1">Cap: <input type="number" name="o1_cap" id="caprec1"> </span>
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-1 col-sm-2 col-md-2 col-lg-2">
                 <center><span class="glyphicon glyphicon-arrow-right" id="switchCap"></span></center>
             </div>
             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
@@ -68,7 +75,8 @@
             </div>
 
         </div>
-        <center><input style="display:none" id="submit_form" type="submit" value="Submit"></center>
+        <br>
+            <center><input class="mybtn" style="display:none" id="submit_form" type="submit" value="Submit"></center>
     </form>
 </div>
 {% endblock form_content %}

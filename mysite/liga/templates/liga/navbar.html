@@ -1,9 +1,17 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse ">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand">La Liga Fantasia Website</a>
+
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+       </button>
+
     </div>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav collapse navbar-collapse">
     <!-- Homepage -->
       <li class="nav-item">
         <a class="nav-link" href="{% url 'liga:index' %}">Homepage</a>
@@ -31,6 +39,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'captracker:captracker' %}">Cap Tracker</a>
       </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin</a>
       </li>

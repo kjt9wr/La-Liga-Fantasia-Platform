@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cap Tracker</title>
-</head>
-<body>
-{% include "liga/navbar.html" %}
+{% extends "liga/base.html" %}
+{% block Title %} Cap Tracker {% endblock Title %}
 
-<div class="container">
 
-    <table class="table .table-sm">
+{% block main_content %}
+<div class="container table-responsive">
+
+    <table class="table .table-sm table-hover">
         <thead>
         <tr>
             <th scope="col"></th>
@@ -45,13 +41,10 @@
         </tbody>
     </table>
 
-    <a href="{% url 'captracker:addTrade' %}" class="btn btn-info btn-lg">
-        <span class="glyphicon glyphicon-plus"></span> Add Trade
-    </a>
+
 </div>
+<center><a href="{% url 'captracker:addTrade' %}" class="btn btn-info btn-lg mybtn">
+        <span class="glyphicon glyphicon-plus"></span> Add Trade
+    </a> </center>
 
-
-{% include "liga/jquery_include.html" %}
-</body>
-</html>
-</html>
+{% endblock main_content %}

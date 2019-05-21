@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 from liga.models import Owner
@@ -132,6 +132,7 @@ def submit(request):
     trade = Trade.objects.all().order_by('-tradeID')
     new_tradeID = trade[0].tradeID + 1
 
+    # Cap the first player receives
     fcap = getInt(request, 'o1_cap')
 
     # boolean if owner2 receives cap (or no cap)
@@ -139,20 +140,38 @@ def submit(request):
     owner2 = Owner.objects.get(pk=request.POST.get('owner2'))
     owner1 = Owner.objects.get(pk=request.POST.get('owner1'))
 
+
+
     # Create dict of players received { key: id }
     players_to_o1 = {k: v for (k, v) in request.POST.items() if 'o1_p' in k}
     players_to_o2 = {k: v for (k, v) in request.POST.items() if 'o2_p' in k}
 
+
     # Reformat to Array of Players
-    o1_players = []
-    for (k,v) in players_to_o1.items():
-        o1_players.append(Player.objects.get(pk=v))
+    try:
+        if len(players_to_o1) + len(players_to_o2) == 0:
+            raise ObjectDoesNotExist('Must have a player')
+        o1_players = []
+        for (k, v) in players_to_o1.items():
+            o1_players.append(Player.objects.get(pk=v))
 
-    o2_players = []
-    for (k,v) in players_to_o2.items():
-        o2_players.append(Player.objects.get(pk=v))
+        o2_players = []
+        for (k, v) in players_to_o2.items():
+            o2_players.append(Player.objects.get(pk=v))
 
-    cap_rec = fcap
+        if len(o1_players) != len(set(o1_players)) or len(o2_players) != len(set(o2_players)):
+            raise ObjectDoesNotExist('Duplicate player error')
+        cap_rec = fcap
+
+    except ObjectDoesNotExist:
+        owner_list = Owner.objects.all()
+        rosters_list = Roster.objects.all()
+        context = {
+            'owner_list': owner_list,
+            'rosters_list': rosters_list,
+            'error_message': "Invalid Player Selection"
+        }
+        return render(request, 'captracker/addTrade.html', context)
 
     # If owner 2 receives cap
     if second:

@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rosters</title>
+{% extends "./base.html" %}
+{% block Title %} {{owner_name}}'s Roster {% endblock Title %}
 
-{% include "liga/jquery_include.html" %}
-</head>
-<body>
-{% include "liga/navbar.html" %}
+
+{% block main_content %}
 <!--
     Main Table
 -->
@@ -51,14 +46,13 @@
                 <td></td>
                 <td><input type="radio" name="franchise" id="franchise" value=""
                             {% if item.athlete.ftag %} checked {% endif %}></td>
-
             </tr>
             <tr>
                 <td><b>Max Cap: </b> </td>
                 <td></td>
                 <td>{{max_cap}} </td>
                 <td></td>
-                <td> <input type="submit" value="Submit"> </td>
+                <td> <input type="submit" value="Submit" class="mybtn"> </td>
             </tr>
             <tr>
                 <td><b>Remaining Cap: </b> </td>
@@ -73,7 +67,5 @@
     </form>
 
 </div>
-
-</body>
-</html>
+{% endblock main_content %}
 
