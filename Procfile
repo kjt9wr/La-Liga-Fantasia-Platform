@@ -1,1 +1,1 @@
-web: gunicorn mysite.wsgi --log-file -
+web: gunicorn protected-retreat-34900.wsgi --log-file -
