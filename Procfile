@@ -1,1 +1,1 @@
-web: gunicorn protected-retreat-34900.wsgi --log-file -
+web: gunicorn MyDjangoProject.wsgi --log-file -
