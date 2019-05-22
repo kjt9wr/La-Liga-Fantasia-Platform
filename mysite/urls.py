@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url('', include('liga.urls')),
     url(r'^liga/', include('liga.urls')),
     url(r'^franchise/', include('franchise.urls')),
     url(r'^captracker/', include('captracker.urls')),
