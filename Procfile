@@ -1,1 +1,0 @@
-web: gunicorn liga.wsgi --log-file -
