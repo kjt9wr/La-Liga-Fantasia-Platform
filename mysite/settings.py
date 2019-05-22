@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'liga/static/'),
 )
+
+ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1', 'protected-retreat-34900.herokuapp.com' ]
