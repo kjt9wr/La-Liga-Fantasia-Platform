@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b70645ae-1574-4b9f-aed6-a7c050d5b42f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/liga/templates/liga/rosters.html" beforeDir="false" afterPath="$PROJECT_DIR$/liga/templates/liga/rosters.html" afterDir="false" />
-    </list>
+    <list default="true" id="b70645ae-1574-4b9f-aed6-a7c050d5b42f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
