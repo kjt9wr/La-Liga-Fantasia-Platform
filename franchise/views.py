@@ -1,12 +1,6 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
-
-from liga.models import Owner
+from django.http import HttpResponseRedirect
 from liga.models import Player
-from liga.models import Roster
-from django.template import loader
 from django.urls import reverse
 from liga.functions import update_franchise_tag, keeper_update
 
