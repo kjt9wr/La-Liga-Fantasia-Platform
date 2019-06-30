@@ -55,7 +55,7 @@ def add_trade(request):
     rosters_list = Roster.objects.all()
     context = {
         'owner_list': owner_list,
-        'rosters_list' : rosters_list,
+        'rosters_list': rosters_list,
     }
     return render(request, 'captracker/addTrade.html', context)
 
@@ -67,7 +67,7 @@ def add_trade(request):
 ##########
 def parse_cap_trade(tid, f_owner, s_owner, cap):
     f_owner = owner_recs(f_owner, cap)
-    s_owner = owner_recs(s_owner, cap*-1)
+    s_owner = owner_recs(s_owner, cap * -1)
     my_trade = [tid, f_owner, s_owner]
     return my_trade
 

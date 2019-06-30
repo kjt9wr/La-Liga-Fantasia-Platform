@@ -1,3 +1,7 @@
+<!--
+    Template for View Roster Page
+-->
+
 {% extends "./base.html" %}
 {% block Title %} {{owner_name}}'s Roster {% endblock Title %}
 
@@ -10,87 +14,88 @@
     <h1> {{owner_name}} </h1>
 
 
-<center> <a class="btn btn-primary" data-toggle="collapse" href="#showTeam" role="button" aria-expanded="false" aria-controls="showTeam">Preview Team</a></center>
-<div class="container collapse" id="showTeam">
-    <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
-    <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <table class="table .table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">QB</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in ownership %}
-                {% if item.athlete.kept and item.athlete.position == 'QB' %}
-                <tr>
-                    <td> {{item.athlete.name}}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <table class="table .table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">RB</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in ownership %}
-                {% if item.athlete.kept and item.athlete.position == 'RB' %}
-                <tr>
-                    <td> {{item.athlete.name}}</td>
-                  {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <table class="table .table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">WR</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in ownership %}
-                {% if item.athlete.kept and item.athlete.position == 'WR' %}
-                <tr>
-                    <td> {{item.athlete.name}}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <table class="table .table-sm">
-                <thead>
-                <tr>
-                    <th scope="col">TE</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in ownership %}
-                {% if item.athlete.kept and item.athlete.position == 'TE' %}
-                <tr>
-                    <td> {{item.athlete.name}}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <center><a class="btn btn-primary" data-toggle="collapse" href="#showTeam" role="button" aria-expanded="false"
+               aria-controls="showTeam">Preview Team</a></center>
+    <div class="container collapse" id="showTeam">
+        <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">QB</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in ownership %}
+                    {% if item.athlete.kept and item.athlete.position == 'QB' %}
+                    <tr>
+                        <td> {{item.athlete.name}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">RB</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in ownership %}
+                    {% if item.athlete.kept and item.athlete.position == 'RB' %}
+                    <tr>
+                        <td> {{item.athlete.name}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">WR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in ownership %}
+                    {% if item.athlete.kept and item.athlete.position == 'WR' %}
+                    <tr>
+                        <td> {{item.athlete.name}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">TE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in ownership %}
+                    {% if item.athlete.kept and item.athlete.position == 'TE' %}
+                    <tr>
+                        <td> {{item.athlete.name}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
+
+        </div>
 
     </div>
-
-</div>
 
     <form action="{% url 'liga:update' owner_id %}" method="post">
         {% csrf_token %}

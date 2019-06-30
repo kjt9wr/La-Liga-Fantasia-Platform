@@ -1,3 +1,7 @@
+<!--
+    Template for View Franchise Tags Page
+-->
+
 {% extends "liga/base.html" %}
 {% block Title %} Franchise {% endblock Title %}
 
@@ -5,146 +9,154 @@
 {% block main_content %}
 
 
-<div class="container-fluid"> <!-- If Needed Left and Right Padding in 'md' and 'lg' screen means use container class -->
-            <div class="row">
+<div class="container-fluid">
+    <div class="row">
 
-                <!--    Quarterback Section -->
-                <form action="{% url 'franchise:update' 'QB' %}" method="post">
-                    {% csrf_token %}
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-                        <h3><center> Quarterback
+        <!--    Quarterback Section -->
+        <form action="{% url 'franchise:update' 'QB' %}" method="post">
+            {% csrf_token %}
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <h3>
+                    <center> Quarterback
                         <br> Franchise tag: ${{tag_prices.0}}
-                        </center></h3>
+                    </center>
+                </h3>
 
-                        <center> <input class="mybtn" type="submit" value="Recalculate"> </center>
-                        <table class="table .table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Player</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Keep?</th>
-                                </tr>
-                            </thead>
-                            <!-- Each player's information -->
-                            <tbody>
-                                {% for qb in qb_list %}
-                                <tr>
-                                    <td> {{qb.name}} </td>
-                                    <td> {{qb.price}} </td>
-                                    <td> <input type="checkbox" name="item" id="qb{{ forloop.counter }}" value="{{ qb.id }}"
-                                        {% if qb.kept %} checked {% endif %} >
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-
-                <!--    Running Back Section -->
-                <form action="{% url 'franchise:update' 'RB' %}" method="post">
-                    {% csrf_token %}
-
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-                        <h3><center> Running Back
-                        <br> Franchise tag: ${{tag_prices.1}}
-                        </center></h3>
-                        <center> <input class="mybtn" type="submit" value="Recalculate"> </center>
-                        <table class="table .table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Player</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Keep?</th>
-                                </tr>
-                            </thead>
-                            <!-- Each player's information -->
-                            <tbody>
-                                {% for rb in rb_list %}
-                                <tr>
-                                    <td> {{rb.name}} </td>
-                                    <td> {{rb.price}} </td>
-                                    <td> <input type="checkbox" name="item" id="rb{{ forloop.counter }}" value="{{ rb.id }}"
-                                        {% if rb.kept %} checked {% endif %} >
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </form>
-
-
-                <!--    Wide Receiver Section -->
-                <form action="{% url 'franchise:update' 'WR' %}" method="post">
-                    {% csrf_token %}
-
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-                        <h3><center> Wide Receiver
-                        <br> Franchise tag: ${{tag_prices.2}}
-                        </center></h3>
-
-                    <center> <input class="mybtn" type="submit" value="Recalculate"> </center>
-                        <table class="table .table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Player</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Keep?</th>
-                                </tr>
-                            </thead>
-                            <!-- Each player's information -->
-                            <tbody>
-                                {% for wr in wr_list %}
-                                <tr>
-                                    <td> {{wr.name}} </td>
-                                    <td> {{wr.price}} </td>
-                                    <td> <input type="checkbox" name="item" id="wr{{ forloop.counter }}" value="{{ wr.id }}"
-                                        {% if wr.kept %} checked {% endif %} >
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-
-
-                <!--    Tight End Section -->
-                <form action="{% url 'franchise:update' 'TE' %}" method="post">
-                    {% csrf_token %}
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-                        <h3> <center> Tight End
-                        <br> Franchise tag: ${{tag_prices.3}}
-                        </center></h3>
-                        <center> <input class="mybtn" type="submit" value="Recalculate"> </center>
-                        <table class="table .table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Player</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Keep?</th>
-                                </tr>
-                            </thead>
-                            <!-- Each player's information -->
-                            <tbody>
-                                {% for te in te_list %}
-                                <tr>
-                                    <td> {{te.name}} </td>
-                                    <td> {{te.price}} </td>
-                                    <td> <input type="checkbox" name="item" id="te{{ forloop.counter }}" value="{{ te.id }}"
-                                        {% if te.kept %} checked {% endif %} >
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </form>
-                <br>
+                <center><input class="mybtn" type="submit" value="Recalculate"></center>
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Keep?</th>
+                    </tr>
+                    </thead>
+                    <!-- Each player's information -->
+                    <tbody>
+                    {% for qb in qb_list %}
+                    <tr>
+                        <td> {{qb.name}}</td>
+                        <td> {{qb.price}}</td>
+                        <td><input type="checkbox" name="item" id="qb{{ forloop.counter }}" value="{{ qb.id }}"
+                                   {% if qb.kept %} checked {% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </form>
+
+        <!--    Running Back Section -->
+        <form action="{% url 'franchise:update' 'RB' %}" method="post">
+            {% csrf_token %}
+
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <h3>
+                    <center> Running Back
+                        <br> Franchise tag: ${{tag_prices.1}}
+                    </center>
+                </h3>
+                <center><input class="mybtn" type="submit" value="Recalculate"></center>
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Keep?</th>
+                    </tr>
+                    </thead>
+                    <!-- Each player's information -->
+                    <tbody>
+                    {% for rb in rb_list %}
+                    <tr>
+                        <td> {{rb.name}}</td>
+                        <td> {{rb.price}}</td>
+                        <td><input type="checkbox" name="item" id="rb{{ forloop.counter }}" value="{{ rb.id }}"
+                                   {% if rb.kept %} checked {% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </form>
+
+
+        <!--    Wide Receiver Section -->
+        <form action="{% url 'franchise:update' 'WR' %}" method="post">
+            {% csrf_token %}
+
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <h3>
+                    <center> Wide Receiver
+                        <br> Franchise tag: ${{tag_prices.2}}
+                    </center>
+                </h3>
+
+                <center><input class="mybtn" type="submit" value="Recalculate"></center>
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Keep?</th>
+                    </tr>
+                    </thead>
+                    <!-- Each player's information -->
+                    <tbody>
+                    {% for wr in wr_list %}
+                    <tr>
+                        <td> {{wr.name}}</td>
+                        <td> {{wr.price}}</td>
+                        <td><input type="checkbox" name="item" id="wr{{ forloop.counter }}" value="{{ wr.id }}"
+                                   {% if wr.kept %} checked {% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+
+
+        <!--    Tight End Section -->
+        <form action="{% url 'franchise:update' 'TE' %}" method="post">
+            {% csrf_token %}
+            <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                <h3>
+                    <center> Tight End
+                        <br> Franchise tag: ${{tag_prices.3}}
+                    </center>
+                </h3>
+                <center><input class="mybtn" type="submit" value="Recalculate"></center>
+                <table class="table .table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Keep?</th>
+                    </tr>
+                    </thead>
+                    <!-- Each player's information -->
+                    <tbody>
+                    {% for te in te_list %}
+                    <tr>
+                        <td> {{te.name}}</td>
+                        <td> {{te.price}}</td>
+                        <td><input type="checkbox" name="item" id="te{{ forloop.counter }}" value="{{ te.id }}"
+                                   {% if te.kept %} checked {% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </form>
+        <br>
+    </div>
+</div>
 
 {% endblock main_content %}
