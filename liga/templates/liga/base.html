@@ -1,3 +1,7 @@
+<!--
+    This is the base code that other templates reuse
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,17 +10,17 @@
 
     {% include "liga/jquery_include.html" %}
 
-{% load static %}
+    {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'liga/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'liga/style.css' %}">
 </head>
 
 <body>
-    {% include "liga/navbar.html" %}
+{% include "liga/navbar.html" %}
 
 
-    {% block main_content %} {% endblock main_content %}
+{% block main_content %} {% endblock main_content %}
 
-    {% block scripts %} {% endblock scripts %}
+{% block scripts %} {% endblock scripts %}
 </body>
 </html>
